@@ -1,0 +1,12 @@
+# R
+.Rhistory
+.RData
+.Rproj.user/
+*.Rproj
+
+# Data files (large / regenerable — see README for how to (re)produce them)
+data/*.csv
+!data/.gitkeep
+
+# OS
+.DS_Store
