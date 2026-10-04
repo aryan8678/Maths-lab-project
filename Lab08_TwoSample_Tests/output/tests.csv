@@ -1,0 +1,3 @@
+"test","question","n","estimate","lower","upper","statistic","df","p","unit","method","caveat"
+"BMI by sex","H0 female and male mean BMI equal",3000,-0.649411753058242,-1.09581773158789,-0.203005774528596,-2.85242093166381,2997.7870537886,0.00436847844027195,"Female minus male BMI","Welch Two Sample t-test","Unweighted observational sample"
+"Positive status by ever-smoking","H0 combined status proportions equal",3000,-0.0327344478271472,-0.0595303868762605,-0.00593850877803389,5.82893745269587,1,0.0157646424903943,"No minus Yes proportion","2-sample test for equality of proportions with continuity correction","Unweighted observational sample"

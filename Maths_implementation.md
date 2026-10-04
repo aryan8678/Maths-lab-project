@@ -1,3 +1,5 @@
+> Historical plan. Phase 2 is now implemented. The simpler Gomez complete-block rice experiment replaces the proposed npk example. See README.md, RUNNING_GUIDE.md and report/FINAL_REVIEW.md for the completed implementation.
+
 # Implementation Plan
 ### BMAT202P — Probability and Statistics Lab Project
 **Project title:** *Statistical Analysis of Diabetes & Lifestyle Risk Factors (CDC BRFSS 2015), with a Classical Design-of-Experiments Supplement*

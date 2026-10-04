@@ -1,0 +1,75 @@
+PRIMARY DATA: validated 3000-person random sample; valid BMI extremes retained.
+SENSITIVITY: separate BMI-IQR-filtered sample.
+Ordinary unweighted tests illustrate syllabus methods. The processed survey omits complex-design weights.
+Self-report, historical 2015 data, observational confounding, class imbalance and multiple tests limit conclusions.
+Hypothetical benchmarks demonstrate calculation. Non-significance does not prove equality or model truth.
+Separate experimental supplements support design concepts, not health conclusions.
+                             test
+1                  One sample BMI
+2  One sample positive proportion
+3                      BMI by sex
+4 Positive status by ever-smoking
+5     Independent PhysHlth by sex
+6              Paired CBT weights
+7                 Age uniform GOF
+8               Status and HighBP
+9               Status and Smoker
+                                        question    n    estimate       lower
+1                               H0 mean BMI = 27 3000 28.39833333 28.17096336
+2         H0 combined positive proportion = 0.11 3000  0.15633333  0.14361722
+3              H0 female and male mean BMI equal 3000 -0.64941175 -1.09581773
+4           H0 combined status proportions equal 3000 -0.03273445 -0.05953039
+5                 H0 mean poor-health days equal 3000  1.24634413  0.63428595
+6                      H0 mean paired change = 0   29  3.00689655  0.22689016
+7 H0 equal probabilities across all 13 age bands 3000          NA          NA
+8                    H0 categorical independence 3000  0.27464023          NA
+9                    H0 categorical independence 3000  0.04499849          NA
+         upper  statistic       df             p                    unit
+1 28.625703307  12.058714 2999.000  9.854631e-33              BMI kg/m^2
+2  0.169939704  65.312394    1.000  6.391810e-16              Proportion
+3 -0.203005775  -2.852421 2997.787  4.368478e-03   Female minus male BMI
+4 -0.005938509   5.828937    1.000  1.576464e-02 No minus Yes proportion
+5  1.858402308   3.992741 2956.428  6.690342e-05  Female minus male days
+6  5.786902945   2.215588   28.000  3.502260e-02       Post minus pre lb
+7           NA 678.124667   12.000 2.117136e-137               X-squared
+8           NA 226.281774    1.000  3.857038e-51              Cramer's V
+9           NA   6.074591    1.000  1.371400e-02              Cramer's V
+                                                                method
+1                                                    One Sample t-test
+2                 1-sample proportions test with continuity correction
+3                                              Welch Two Sample t-test
+4 2-sample test for equality of proportions with continuity correction
+5                                              Welch Two Sample t-test
+6                                                        Paired t-test
+7                             Chi-squared test for given probabilities
+8                                           Pearson's Chi-squared test
+9                                           Pearson's Chi-squared test
+                                                                                caveat
+1                                             27 is a hypothetical classroom benchmark
+2                                    11% is hypothetical; outcome includes prediabetes
+3                                                      Unweighted observational sample
+4                                                      Unweighted observational sample
+5                                                      Unweighted observational sample
+6 Within CBT group; uncontrolled before-after change is not a causal efficacy estimate
+7                   Hypothetical null; unequal-width age bands do not imply uniformity
+8                                                      Unweighted observational sample
+9                                                      Unweighted observational sample
+R version 4.5.3 (2026-03-11 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] C
+system code page: 65001
+
+time zone: Asia/Calcutta
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] MASS_7.3-65    compiler_4.5.3 tools_4.5.3   

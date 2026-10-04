@@ -1,0 +1,20 @@
+"variable","category","count","proportion"
+"Diabetes_012","No diabetes",2531,0.843666666666667
+"Diabetes_012","Prediabetes",48,0.016
+"Diabetes_012","Diabetes",421,0.140333333333333
+"Diabetes_binary","No",2531,0.843666666666667
+"Diabetes_binary","Yes",469,0.156333333333333
+"Sex","Female",1667,0.555666666666667
+"Sex","Male",1333,0.444333333333333
+"Education","No school",2,0.000666666666666667
+"Education","Elementary",49,0.0163333333333333
+"Education","Some high school",105,0.035
+"Education","High school",778,0.259333333333333
+"Education","Some college",834,0.278
+"Education","College graduate",1232,0.410666666666667
+"HighBP","No",1703,0.567666666666667
+"HighBP","Yes",1297,0.432333333333333
+"Smoker","No",1583,0.527666666666667
+"Smoker","Yes",1417,0.472333333333333
+"PhysActivity","No",752,0.250666666666667
+"PhysActivity","Yes",2248,0.749333333333333

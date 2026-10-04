@@ -1,0 +1,8 @@
+     variable    n      mean median       sd variance min q1 q3 max iqr
+25%       BMI 3000 28.398333     27 6.351413 40.34044  15 24 31  89   7
+25%1 MentHlth 3000  3.255667      0 7.394222 54.67453   0  0  2  30   2
+25%2 PhysHlth 3000  4.151667      0 8.616268 74.24008   0  0  3  30   3
+
+No diabetes Prediabetes    Diabetes 
+       2531          48         421 
+Count plots preserve the 0 and 30 day endpoints.

@@ -1,0 +1,10 @@
+"metric","value"
+"n",3000
+"r_squared",0.0680671780968896
+"adjusted_r_squared",0.0599170760553557
+"residual_sd",6.158194750366
+"filtered_r_squared",0.0574279581119397
+"filtered_adjusted_r_squared",0.0488561242227862
+"influential_n",140
+"max_cook",0.0427297752867495
+"max_column_vif",2.47427008204141

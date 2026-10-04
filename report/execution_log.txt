@@ -1,0 +1,72 @@
+
+RUNNING Lab00_Setup/00_setup.R 
+COMPLETED Lab00_Setup/00_setup.R 
+
+RUNNING Lab01_Data_Types/01_data_types.R 
+COMPLETED Lab01_Data_Types/01_data_types.R 
+
+RUNNING Lab01B_Outlier_Analysis/01b_outlier_analysis.R 
+COMPLETED Lab01B_Outlier_Analysis/01b_outlier_analysis.R 
+
+RUNNING Lab02_Summary_Stats/02_summary_stats.R 
+COMPLETED Lab02_Summary_Stats/02_summary_stats.R 
+
+RUNNING Lab03_Correlation_Regression/03_correlation_regression.R 
+COMPLETED Lab03_Correlation_Regression/03_correlation_regression.R 
+
+RUNNING Lab04_Multiple_Regression/04_multiple_regression.R 
+COMPLETED Lab04_Multiple_Regression/04_multiple_regression.R 
+
+RUNNING Lab05_Binomial_Fitting/05_binomial_fitting.R 
+COMPLETED Lab05_Binomial_Fitting/05_binomial_fitting.R 
+
+RUNNING Lab06_Normal_Poisson_Fitting/06_normal_poisson_fitting.R 
+COMPLETED Lab06_Normal_Poisson_Fitting/06_normal_poisson_fitting.R 
+
+RUNNING Lab07_OneSample_Tests/07_onesample_tests.R 
+COMPLETED Lab07_OneSample_Tests/07_onesample_tests.R 
+
+RUNNING Lab08_TwoSample_Tests/08_twosample_tests.R 
+COMPLETED Lab08_TwoSample_Tests/08_twosample_tests.R 
+
+RUNNING Lab09_Paired_TTest/09_independent_ttest.R 
+COMPLETED Lab09_Paired_TTest/09_independent_ttest.R 
+
+RUNNING Lab09_Paired_TTest/09b_paired_ttest.R 
+COMPLETED Lab09_Paired_TTest/09b_paired_ttest.R 
+
+RUNNING Lab10_ChiSquare_Tests/10_chisquare_tests.R 
+COMPLETED Lab10_ChiSquare_Tests/10_chisquare_tests.R 
+
+RUNNING Lab11_ANOVA_CRD/11_anova_crd.R 
+COMPLETED Lab11_ANOVA_CRD/11_anova_crd.R 
+
+RUNNING Lab12_ANOVA_RBD/12_anova_rbd.R 
+COMPLETED Lab12_ANOVA_RBD/12_anova_rbd.R 
+
+RUNNING Lab13_Latin_Square/13_latin_square.R 
+COMPLETED Lab13_Latin_Square/13_latin_square.R 
+
+RUNNING Lab14_Consolidation/14_consolidation.R 
+COMPLETED Lab14_Consolidation/14_consolidation.R 
+
+All course exercises completed.
+R version 4.5.3 (2026-03-11 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] C
+system code page: 65001
+
+time zone: Asia/Calcutta
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+loaded via a namespace (and not attached):
+[1] MASS_7.3-65    compiler_4.5.3 tools_4.5.3   

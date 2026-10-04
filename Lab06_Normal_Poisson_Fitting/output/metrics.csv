@@ -1,0 +1,16 @@
+"metric","value"
+"n",3000
+"normal_mean",28.3983333333333
+"normal_sd",6.35141275913487
+"shapiro_W",0.89692925848783
+"shapiro_p",5.85637588616444e-41
+"lambda",4.15166666666667
+"variance",74.2400772479715
+"dispersion",17.881993716894
+"zero_percent",62.9
+"day30_percent",7.4
+"grouped_lambda",1.79744828060717
+"poisson_chi_squared",41781.6761914306
+"poisson_df",6
+"poisson_p",0
+"min_expected",7.64875062701541

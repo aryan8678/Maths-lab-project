@@ -1,0 +1,2 @@
+"test","question","n","estimate","lower","upper","statistic","df","p","unit","method","caveat"
+"Independent PhysHlth by sex","H0 mean poor-health days equal",3000,1.24634412952368,0.634285950976383,1.85840230807098,3.99274149903742,2956.4283137245,6.69034194629247e-05,"Female minus male days","Welch Two Sample t-test","Unweighted observational sample"

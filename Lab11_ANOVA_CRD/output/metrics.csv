@@ -1,0 +1,11 @@
+"metric","value"
+"education_F",14.4064462915677
+"education_p",5.72409567748313e-14
+"education_eta_squared",0.0234936315146265
+"education_variance_p",0.000130404531469308
+"education_welch_p",0.000351255455304911
+"crd_n",32
+"crd_F",3.60808842628669
+"crd_p",0.0102621846626321
+"crd_variance_p",0.115952069610097
+"crd_residual_shapiro_p",0.87238683661337

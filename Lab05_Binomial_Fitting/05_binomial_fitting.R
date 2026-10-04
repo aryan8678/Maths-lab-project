@@ -1,30 +1,25 @@
-# Lab 5 - Fitting the Binomial Distribution
-# Syllabus Exp. 5
-# Input: data/brfss_clean.csv
-
-df <- read.csv("../data/brfss_clean.csv")
-df$Diabetes_binary <- factor(df$Diabetes_binary, levels = c("No", "Yes"))
-
-n_per_group <- 10
-groups <- split(df$Diabetes_binary, ceiling(seq_along(df$Diabetes_binary) / n_per_group))
-successes <- sapply(groups, function(g) sum(g == "Yes"))
-
-p_hat <- mean(df$Diabetes_binary == "Yes")
-observed <- table(factor(successes, levels = 0:n_per_group))
-expected <- dbinom(0:n_per_group, n_per_group, p_hat) * length(groups)
-
-png("output/binomial_observed_vs_expected.png", width = 700, height = 450)
-barplot(rbind(observed, expected), beside = TRUE,
-        col = c("steelblue", "orange"),
-        names.arg = 0:n_per_group, xlab = "Successes per block of 10",
-        main = "Binomial Fit: Diabetes_binary")
-legend("topright", legend = c("Observed", "Expected"), fill = c("steelblue", "orange"))
-dev.off()
-
-sink("output/lab05_binomial_fitting.txt")
-cat("p_hat (sample proportion with diabetes):", p_hat, "\n\n")
-cat("=== Chi-square goodness-of-fit: Binomial(10, p_hat) ===\n")
-print(chisq.test(observed, p = dbinom(0:n_per_group, n_per_group, p_hat), rescale.p = TRUE))
-sink()
-
-cat("Lab 5 done. See output/lab05_binomial_fitting.txt and binomial_observed_vs_expected.png\n")
+# BMAT202P Probability and Statistics Lab
+# Run from the project root or this lab directory. See RUNNING_GUIDE.md.
+common <- if (file.exists("R/common.R")) "R/common.R" else "../R/common.R"
+source(common, local = TRUE)
+# Experiment 5: fitted binomial distribution with pooled chi-square GOF
+out <- lab_output("Lab05_Binomial_Fitting"); df <- load_clean()
+block_size <- 10; usable_n <- floor(nrow(df)/block_size)*block_size
+status <- as.integer(df$Diabetes_binary[seq_len(usable_n)]=="Yes")
+successes <- colSums(matrix(status,nrow=block_size))
+observed <- as.numeric(table(factor(successes,levels=0:10)))
+p_hat <- mean(status); expected <- length(successes)*dbinom(0:10,10,p_hat)
+gof <- fitted_gof(observed,function(p)dbinom(0:10,10,p),p_hat,c(.001,.999),as.character(0:10))
+csv(data.frame(successes=0:10,observed=observed,expected=expected),file.path(out,"unpooled_frequencies.csv"))
+csv(gof$table,file.path(out,"pooled_frequencies.csv"))
+metrics(c(blocks=length(successes),omitted_incomplete_block=nrow(df)-usable_n,p_hat=p_hat,
+ grouped_p=gof$estimate,chi_squared=gof$statistic,df=gof$df,p=gof$p,min_expected=min(gof$table$expected)),out)
+draw(file.path(out,"binomial_observed_vs_expected.png"),{
+ barplot(rbind(observed,expected),beside=TRUE,names.arg=0:10,col=c(blue,orange),xlab="Positive statuses per block of ten",ylab="Blocks",main="Binomial fit to artificial respondent blocks")
+ legend("topright",c("Observed","Expected"),fill=c(blue,orange),bty="n")
+})
+log_text(file.path(out,"lab05_binomial_fitting.txt"),{
+ cat("Artificial blocks for a course demonstration. Common-probability and independence are approximations.\n")
+ cat("Parameter fitted to pooled bin counts. df = pooled bins - 1 - 1 estimated parameter.\n")
+ print(gof); cat("A non-significant test does not prove homogeneous individual risk.\n")
+})

@@ -1,0 +1,8 @@
+"metric","value"
+"n",29
+"pre_mean",82.6896551724138
+"post_mean",85.6965517241379
+"change_mean",3.00689655172414
+"change_sd",7.30850439236387
+"shapiro_difference_p",0.00794512390241832
+"wilcoxon_sensitivity_p",0.0644656393443706

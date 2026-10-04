@@ -10,3 +10,11 @@ data/*.csv
 
 # OS
 .DS_Store
+
+# Local runtimes and private artifact builds
+.tools/
+.build/
+.codex-finalizer/
+data/*.rds
+__pycache__/
+.chart-data-*/

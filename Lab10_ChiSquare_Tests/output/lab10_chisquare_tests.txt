@@ -1,0 +1,23 @@
+
+	Chi-squared test for given probabilities
+
+data:  table(df$Age)
+X-squared = 678.12, df = 12, p-value < 2.2e-16
+
+               test                                       question    n
+1   Age uniform GOF H0 equal probabilities across all 13 age bands 3000
+2 Status and HighBP                    H0 categorical independence 3000
+3 Status and Smoker                    H0 categorical independence 3000
+    estimate lower upper  statistic df             p       unit
+1         NA    NA    NA 678.124667 12 2.117136e-137  X-squared
+2 0.27464023    NA    NA 226.281774  1  3.857038e-51 Cramer's V
+3 0.04499849    NA    NA   6.074591  1  1.371400e-02 Cramer's V
+                                    method
+1 Chi-squared test for given probabilities
+2               Pearson's Chi-squared test
+3               Pearson's Chi-squared test
+                                                              caveat
+1 Hypothetical null; unequal-width age bands do not imply uniformity
+2                                    Unweighted observational sample
+3                                    Unweighted observational sample
+Contingency tests use Pearson chi-square without continuity correction.

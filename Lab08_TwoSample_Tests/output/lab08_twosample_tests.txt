@@ -1,0 +1,25 @@
+
+	Welch Two Sample t-test
+
+data:  BMI by Sex
+t = -2.8524, df = 2997.8, p-value = 0.004368
+alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
+95 percent confidence interval:
+ -1.0958177 -0.2030058
+sample estimates:
+mean in group Female   mean in group Male 
+            28.10978             28.75919 
+
+
+	2-sample test for equality of proportions with continuity correction
+
+data:  rates$positive out of rates$n
+X-squared = 5.8289, df = 1, p-value = 0.01576
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.059530387 -0.005938509
+sample estimates:
+   prop 1    prop 2 
+0.1408718 0.1736062 
+
+Positive column used explicitly. Smoking means ever 100 cigarettes.

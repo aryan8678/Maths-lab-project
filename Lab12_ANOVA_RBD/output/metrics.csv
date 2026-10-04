@@ -1,0 +1,13 @@
+"metric","value"
+"n",24
+"blocks",4
+"treatments",6
+"block_F",5.86224305563163
+"block_p",0.0074157783150217
+"treatment_F",2.16777868149536
+"treatment_p",0.112809412634841
+"residual_ss_blocked",1658376.16666667
+"residual_ss_unblocked",3602737
+"residual_mse_blocked",110558.411111111
+"residual_mse_unblocked",200152.055555556
+"residual_shapiro_p",0.487175927606924

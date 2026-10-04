@@ -1,0 +1,26 @@
+Two-sided alternatives, alpha .05. Both benchmarks are hypothetical teaching values.
+
+	One Sample t-test
+
+data:  df$BMI
+t = 12.059, df = 2999, p-value < 2.2e-16
+alternative hypothesis: true mean is not equal to 27
+95 percent confidence interval:
+ 28.17096 28.62570
+sample estimates:
+mean of x 
+ 28.39833 
+
+
+	1-sample proportions test with continuity correction
+
+data:  sum(df$Diabetes_binary == "Yes") out of nrow(df), null probability 0.11
+X-squared = 65.312, df = 1, p-value = 6.392e-16
+alternative hypothesis: true p is not equal to 0.11
+95 percent confidence interval:
+ 0.1436172 0.1699397
+sample estimates:
+        p 
+0.1563333 
+
+prop.test reports X-squared, not a z statistic.

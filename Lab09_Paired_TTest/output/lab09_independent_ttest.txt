@@ -1,0 +1,13 @@
+
+	Welch Two Sample t-test
+
+data:  PhysHlth by Sex
+t = 3.9927, df = 2956.4, p-value = 6.69e-05
+alternative hypothesis: true difference in means between group Female and group Male is not equal to 0
+95 percent confidence interval:
+ 0.634286 1.858402
+sample estimates:
+mean in group Female   mean in group Male 
+            4.705459             3.459115 
+
+Independent respondents. Bounded skewed counts warrant cautious mean comparison.

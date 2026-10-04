@@ -1,0 +1,26 @@
+
+	Paired t-test
+
+data:  d$Postwt and d$Prewt
+t = 2.2156, df = 28, p-value = 0.03502
+alternative hypothesis: true mean difference is not equal to 0
+95 percent confidence interval:
+ 0.2268902 5.7869029
+sample estimates:
+mean difference 
+       3.006897 
+
+
+	Shapiro-Wilk normality test
+
+data:  change
+W = 0.89618, p-value = 0.007945
+
+
+	Wilcoxon signed rank test with continuity correction
+
+data:  change
+V = 303.5, p-value = 0.06447
+alternative hypothesis: true location is not equal to 0
+
+Each line joins the same patient. Analyse differences, not independent pre/post samples.

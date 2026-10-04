@@ -1,0 +1,3 @@
+"test","question","n","estimate","lower","upper","statistic","df","p","unit","method","caveat"
+"One sample BMI","H0 mean BMI = 27",3000,28.3983333333333,28.1709633595885,28.6257033070782,12.0587141573583,2999,9.85463070087047e-33,"BMI kg/m^2","One Sample t-test","27 is a hypothetical classroom benchmark"
+"One sample positive proportion","H0 combined positive proportion = 0.11",3000,0.156333333333333,0.143617217006789,0.169939704289035,65.3123935989104,1,6.39180986529421e-16,"Proportion","1-sample proportions test with continuity correction","11% is hypothetical; outcome includes prediabetes"

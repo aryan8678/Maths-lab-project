@@ -1,0 +1,42 @@
+
+	Pearson's product-moment correlation
+
+data:  df$BMI and df$PhysHlth
+t = 5.5923, df = 2998, p-value = 2.443e-08
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.06605976 0.13689479
+sample estimates:
+      cor 
+0.1016061 
+
+
+	Spearman's rank correlation rho
+
+data:  df$BMI and df$PhysHlth
+S = 4014463096, p-value = 3.131e-09
+alternative hypothesis: true rho is not equal to 0
+sample estimates:
+     rho 
+0.107897 
+
+
+Call:
+lm(formula = BMI ~ PhysHlth, data = df)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-13.836  -4.087  -1.087   2.913  60.913 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) 28.08738    0.12808 219.297  < 2e-16 ***
+PhysHlth     0.07490    0.01339   5.592 2.44e-08 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 6.32 on 2998 degrees of freedom
+Multiple R-squared:  0.01032,	Adjusted R-squared:  0.009994 
+F-statistic: 31.27 on 1 and 2998 DF,  p-value: 2.443e-08
+
+R-squared describes variation in BMI. This association is not a causal effect.

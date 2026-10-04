@@ -1,66 +1,38 @@
-# Lab 1 - Data Types, Import & Export
-# Syllabus Exp. 1
-# Input:  data/brfss_sample.csv (from Lab 0)
-# Output: data/brfss_clean.csv, output/lab01_variable_types.txt
-
-df <- read.csv("../data/brfss_sample.csv")
-
-sink("output/lab01_variable_types.txt")
-
-cat("=== Structure ===\n")
-str(df)
-
-cat("\n=== Class of each column ===\n")
-print(sapply(df, class))
-
-cat("\n=== Missing values per column ===\n")
-print(colSums(is.na(df)))
-
-sink()
-
-## Convert appropriate columns to factors ---------------------------------
-binary_vars <- c("Diabetes_binary", "HighBP", "HighChol", "CholCheck",
-                  "Smoker", "Stroke", "HeartDiseaseorAttack", "PhysActivity",
-                  "Fruits", "Veggies", "HvyAlcoholConsump", "AnyHealthcare",
-                  "NoDocbcCost", "DiffWalk", "Sex")
-df[binary_vars] <- lapply(df[binary_vars], function(x) factor(x, levels = c(0, 1)))
-
-df$Sex             <- factor(df$Sex, labels = c("Female", "Male"))
-df$Smoker          <- factor(df$Smoker, labels = c("No", "Yes"))
-df$Diabetes_binary <- factor(df$Diabetes_binary, labels = c("No", "Yes"))
-
-df$GenHlth   <- factor(df$GenHlth, ordered = TRUE)
-df$Education <- factor(df$Education, ordered = TRUE)
-df$Income    <- factor(df$Income, ordered = TRUE)
-df$Age       <- factor(df$Age, ordered = TRUE)   # BRFSS age band code, not raw age
-
-## Variable type classification table -------------------------------------
-var_types <- data.frame(
-  variable = names(df),
-  type = c("count (12-class label pre-binarize)", # Diabetes_012
-           "binary",                               # Diabetes_binary (derived)
-           "binary", "binary", "binary",            # HighBP, HighChol, CholCheck
-           "continuous",                            # BMI
-           "binary", "binary", "binary", "binary",  # Smoker, Stroke, HeartDiseaseorAttack, PhysActivity
-           "binary", "binary", "binary",            # Fruits, Veggies, HvyAlcoholConsump
-           "binary", "binary",                      # AnyHealthcare, NoDocbcCost
-           "ordinal",                               # GenHlth
-           "count (0-30 days)", "count (0-30 days)",# MentHlth, PhysHlth
-           "binary",                                # DiffWalk
-           "binary",                                # Sex
-           "ordinal (age band)",                    # Age
-           "ordinal",                                # Education
-           "ordinal"                                 # Income
-  )[match(names(df), c("Diabetes_012","Diabetes_binary","HighBP","HighChol","CholCheck",
-                        "BMI","Smoker","Stroke","HeartDiseaseorAttack","PhysActivity",
-                        "Fruits","Veggies","HvyAlcoholConsump","AnyHealthcare","NoDocbcCost",
-                        "GenHlth","MentHlth","PhysHlth","DiffWalk","Sex","Age",
-                        "Education","Income"))]
-)
-write.csv(var_types, "output/lab01_variable_type_table.csv", row.names = FALSE)
-
-## Export cleaned data ------------------------------------------------------
-write.csv(df, "../data/brfss_clean.csv", row.names = FALSE)
-
-cat("Lab 1 done. See output/lab01_variable_types.txt,",
-    "output/lab01_variable_type_table.csv, and data/brfss_clean.csv\n")
+# BMAT202P Probability and Statistics Lab
+# Run from the project root or this lab directory. See RUNNING_GUIDE.md.
+common <- if (file.exists("R/common.R")) "R/common.R" else "../R/common.R"
+source(common, local = TRUE)
+# Experiment 1: validation, typing, import and export
+out <- lab_output("Lab01_Data_Types")
+df <- read.csv(data_path("brfss_sample.csv"))
+binary <- c("Diabetes_binary","HighBP","HighChol","CholCheck","Smoker","Stroke",
+ "HeartDiseaseorAttack","PhysActivity","Fruits","Veggies","HvyAlcoholConsump",
+ "AnyHealthcare","NoDocbcCost","DiffWalk","Sex")
+allowed <- c(setNames(rep(list(0:1),length(binary)),binary),
+ list(Diabetes_012=0:2,GenHlth=1:5,Education=1:6,Income=1:8,Age=1:13,MentHlth=0:30,PhysHlth=0:30))
+bad <- matrix(FALSE,nrow(df),length(allowed)+1, dimnames=list(NULL,c(names(allowed),"BMI")))
+for (v in names(allowed)) bad[,v] <- is.na(df[[v]]) | !(df[[v]] %in% allowed[[v]])
+bad[,"BMI"] <- !is.finite(df$BMI) | df$BMI <= 0
+invalid <- rowSums(bad)>0
+ledger <- data.frame(source_row=df$source_row[invalid],
+ reason=apply(bad[invalid,,drop=FALSE],1,function(x) paste(colnames(bad)[x],collapse=", ")))
+csv(ledger,file.path(out,"invalid_records.csv"))
+csv(data.frame(variable=names(df),missing=sapply(df,function(x)sum(is.na(x)))),file.path(out,"missingness.csv"))
+original_n <- nrow(df); df <- df[!invalid,]
+for(v in setdiff(binary,"Sex")) df[[v]] <- factor(df[[v]],levels=0:1,labels=c("No","Yes"))
+df$Sex <- factor(df$Sex,levels=0:1,labels=c("Female","Male"))
+df$Diabetes_012 <- factor(df$Diabetes_012,levels=0:2,labels=c("No diabetes","Prediabetes","Diabetes"))
+df$Age <- factor(df$Age,levels=1:13,labels=c("18-24","25-29","30-34","35-39","40-44","45-49","50-54","55-59","60-64","65-69","70-74","75-79","80+"))
+df$GenHlth <- factor(df$GenHlth,levels=1:5,labels=c("Excellent","Very good","Good","Fair","Poor"),ordered=TRUE)
+df$Education <- factor(df$Education,levels=1:6,labels=c("No school","Elementary","Some high school","High school","Some college","College graduate"))
+df$Income <- factor(df$Income,levels=1:8,labels=c("<10k","10-15k","15-20k","20-25k","25-35k","35-50k","50-75k","75k+"))
+stopifnot(!anyNA(df))
+types <- vapply(names(df),function(v) if(v=="source_row") "Source row identifier" else if(v=="Diabetes_012") "Categorical status with 3 levels" else if(v %in% binary) "Binary nominal" else if(v=="BMI") "Continuous measure recorded as integer" else if(v %in% c("MentHlth","PhysHlth")) "Bounded count 0-30 days" else "Ordinal category",character(1))
+csv(data.frame(variable=names(df),type=types,R_class=sapply(df,function(x)paste(class(x),collapse=", "))),file.path(out,"variable_dictionary.csv"))
+saveRDS(df,data_path("brfss_clean.rds")); csv(df,data_path("brfss_clean.csv"))
+metrics(c(original_n=original_n,invalid_n=sum(invalid),clean_n=nrow(df),missing_cells=sum(is.na(df))),out)
+log_text(file.path(out,"lab01_variable_types.txt"),{
+ cat("RDS preserves factors; CSV is for exchange. Ordinal predictors use categorical contrasts in regression.\n")
+ cat("Rows before:",original_n,"Invalid removed:",sum(invalid),"Rows retained:",nrow(df),"\n")
+ str(df); print(types)
+})

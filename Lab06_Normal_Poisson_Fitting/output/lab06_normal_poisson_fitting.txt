@@ -1,0 +1,32 @@
+
+	Shapiro-Wilk normality test
+
+data:  df$BMI
+W = 0.89693, p-value < 2.2e-16
+
+$estimate
+[1] 1.797448
+
+$statistic
+[1] 41781.68
+
+$df
+[1] 6
+
+$p
+[1] 0
+
+$table
+       bin observed   expected
+1   0 to 0     1887 497.163670
+2   1 to 1      149 893.625983
+3   2 to 2      191 803.123243
+4   3 to 3       89 481.190831
+5   4 to 4       52 216.228908
+6   5 to 5       85  77.732056
+7   6 to 6       12  23.286558
+8 7 to >30      535   7.648751
+
+Poisson is a teaching hypothesis. PhysHlth is bounded 0-30 and has excess zeros.
+Variance/mean: 17.88199 
+The ordinary Poisson upper tail is included in pooling. Parameter is fitted to pooled counts.

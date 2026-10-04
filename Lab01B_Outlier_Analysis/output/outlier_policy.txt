@@ -1,0 +1,4 @@
+PRIMARY: retain valid BMI extremes. SENSITIVITY: remove all BMI IQR flags.
+The filtered dataset demonstrates removal, and changes the population analysed.
+Do not filter binary/ordinal variables using IQR. Zero-heavy day counts can have IQR zero.
+Fences: 13.5 41.5 Flagged: 114 Retained: 2886 

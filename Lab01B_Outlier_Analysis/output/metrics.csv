@@ -1,0 +1,10 @@
+"metric","value"
+"q1",24
+"q3",31
+"iqr",7
+"lower_fence",13.5
+"upper_fence",41.5
+"flagged_n",114
+"flagged_percent",3.8
+"retained_n",2886
+"primary_n",3000

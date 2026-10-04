@@ -1,0 +1,2 @@
+"test","question","n","estimate","lower","upper","statistic","df","p","unit","method","caveat"
+"Paired CBT weights","H0 mean paired change = 0",29,3.00689655172414,0.226890158358777,5.7869029450895,2.21558784393117,28,0.0350225975621888,"Post minus pre lb","Paired t-test","Within CBT group; uncontrolled before-after change is not a causal efficacy estimate"

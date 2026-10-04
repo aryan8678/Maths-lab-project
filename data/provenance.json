@@ -1,0 +1,16 @@
+{
+  "raw_file": "diabetes_012_health_indicators_BRFSS2015.csv",
+  "sha256": "a971809d0786d2d7d7f6070f83dfe8af9d860ea33a79e0e2701c8a49f78f9861",
+  "acquired_on": "2026-10-04",
+  "source": "Alex Teboul's Kaggle derivative of CDC BRFSS 2015",
+  "download_url": "https://www.kaggle.com/api/v1/datasets/download/alexteboul/diabetes-health-indicators-dataset",
+  "source_page": "https://www.kaggle.com/datasets/alexteboul/diabetes-health-indicators-dataset",
+  "original_survey": "https://www.cdc.gov/brfss/annual_data/annual_2015.html",
+  "supplement_package": "agridat 1.26",
+  "supplement_download": "https://cloud.r-project.org/src/contrib/agridat_1.26.tar.gz",
+  "supplement_files": [
+    "cochran.crd.tsv",
+    "gomez.seedrate.tsv",
+    "goulden.latin.tsv"
+  ]
+}

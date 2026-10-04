@@ -1,0 +1,83 @@
+Education comparison is observational. Sulfur treatments use the documented Cochran CRD.
+              Df Sum Sq Mean Sq F value   Pr(>F)    
+Education      5   2842   568.5   14.41 5.72e-14 ***
+Residuals   2994 118139    39.5                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+	One-way analysis of means (not assuming equal variances)
+
+data:  BMI and Education
+F = 11.812, num df = 5.00, denom df = 11.33, p-value = 0.0003513
+
+
+	Pairwise comparisons using t tests with non-pooled SD 
+
+data:  df$BMI and df$Education 
+
+                 No school Elementary Some high school High school Some college
+Elementary       1.00      -          -                -           -           
+Some high school 1.00      1.00       -                -           -           
+High school      1.00      1.00       0.35             -           -           
+Some college     1.00      1.00       1.00             0.18        -           
+College graduate 1.00      0.49       1.00             9.1e-14     1.5e-06     
+
+P value adjustment method: holm 
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = BMI ~ Education, data = df)
+
+$Education
+                                        diff        lwr        upr     p adj
+Elementary-No school               4.9489796 -7.9728535 17.8708127 0.8846955
+Some high school-No school         3.7000000 -9.0859887 16.4859887 0.9629454
+High school-No school              5.1311054 -7.5510941 17.8133049 0.8585904
+Some college-No school             4.3117506 -8.3693571 16.9928583 0.9275730
+College graduate-No school         2.8214286 -9.8547779 15.4976350 0.9884237
+Some high school-Elementary       -1.2489796 -4.3479665  1.8500074 0.8605795
+High school-Elementary             0.1821258 -2.4561305  2.8203822 0.9999594
+Some college-Elementary           -0.6372290 -3.2702320  1.9957741 0.9830883
+College graduate-Elementary       -2.1275510 -4.7368464  0.4817444 0.1842079
+High school-Some high school       1.4311054 -0.4311875  3.2933983 0.2419904
+Some college-Some high school      0.6117506 -1.2430926  2.4665938 0.9359782
+College graduate-Some high school -0.8785714 -2.6996043  0.9424614 0.7416867
+Some college-High school          -0.8193548 -1.7121704  0.0734608 0.0934530
+College graduate-High school      -2.3096768 -3.1299433 -1.4894104 0.0000000
+College graduate-Some college     -1.4903220 -2.2935316 -0.6871125 0.0000019
+
+            Df Sum Sq Mean Sq F value Pr(>F)  
+trt          6  972.3  162.06   3.608 0.0103 *
+Residuals   25 1122.9   44.92                 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+  Tukey multiple comparisons of means
+    95% family-wise confidence level
+
+Fit: aov(formula = inf ~ trt, data = crd)
+
+$trt
+          diff           lwr       upr     p adj
+F3-F12   3.750 -11.415553048 18.915553 0.9837309
+F6-F12   9.750  -5.415553048 24.915553 0.4063801
+O-F12   16.875   3.741245798 30.008754 0.0059650
+S12-F12  8.500  -6.665553048 23.665553 0.5640227
+S3-F12  11.000  -4.165553048 26.165553 0.2732953
+S6-F12  12.500  -2.665553048 27.665553 0.1570983
+F6-F3    6.000  -9.165553048 21.165553 0.8605992
+O-F3    13.125  -0.008754202 26.258754 0.0502330
+S12-F3   4.750 -10.415553048 19.915553 0.9487216
+S3-F3    7.250  -7.915553048 22.415553 0.7250367
+S6-F3    8.750  -6.415553048 23.915553 0.5313730
+O-F6     7.125  -6.008754202 20.258754 0.5998241
+S12-F6  -1.250 -16.415553048 13.915553 0.9999659
+S3-F6    1.250 -13.915553048 16.415553 0.9999659
+S6-F6    2.750 -12.415553048 17.915553 0.9968596
+S12-O   -8.375 -21.508754202  4.758754 0.4158197
+S3-O    -5.875 -19.008754202  7.258754 0.7800748
+S6-O    -4.375 -17.508754202  8.758754 0.9322478
+S3-S12   2.500 -12.665553048 17.665553 0.9981464
+S6-S12   4.000 -11.165553048 19.165553 0.9774958
+S6-S3    1.500 -13.665553048 16.665553 0.9999007
+
+CRD control has 8 replicates; six sulfur treatments have 4 each.

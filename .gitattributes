@@ -1,0 +1,7 @@
+# Keep document and image bytes unchanged across Windows and other systems.
+*.pdf binary
+*.pptx binary
+*.docx binary
+*.png binary
+*.zip binary
+*.rds binary

@@ -1,0 +1,6 @@
+"group","No.school","Elementary","Some.high.school","High.school","Some.college"
+"Elementary",1,,,,
+"Some high school",1,1,,,
+"High school",1,1,0.347728837042681,,
+"Some college",1,1,1,0.180383969854407,
+"College graduate",1,0.488347800004868,1,9.06261828671782e-14,1.48637064332403e-06
