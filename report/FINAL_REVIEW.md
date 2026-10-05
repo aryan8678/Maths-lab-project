@@ -1,18 +1,18 @@
 # Completed implementation and rubric review
 
-Prepared 4 October 2026. The repository was pulled at commit `2bfebaedd34c387206d70c8a362234e1cd425c2d`. This review covers the revised local files and the supplied BMAT202P syllabus, version 1.0.
+Analysis prepared 4 October 2026. Presentation revised 5 October 2026. The repository was pulled at commit `2bfebaedd34c387206d70c8a362234e1cd425c2d`. This review covers the revised local files and the supplied BMAT202P syllabus, version 1.0.
 
 ## Completion evidence
 
-All 17 scripts completed through `run_all.R` in R 4.5.3 with MASS 7.3-65. The end-to-end validation passed. The execution log and statistical outputs are retained. The final pack contains a 25-slide editable PowerPoint, its PDF, an 18-page Word/PDF report, a 29-page atlas and all original PNG drawings. All slides, report pages and atlas pages were visually inspected; the presentation and report were rendered through installed PowerPoint and Word. The deck also passed package, geometry, font and native-object checks.
+All 17 scripts completed through `run_all.R` in R 4.5.3 with MASS 7.3-65. The end-to-end validation passed. The execution log and statistical outputs are retained. The final pack contains an editable PowerPoint with one intro plus ten content slides, its PDF, an 18-page Word/PDF report, a 29-page atlas and all original PNG drawings. All slides, report pages and atlas pages were visually inspected; the presentation and report were rendered through installed PowerPoint and Word. The deck also passed package, geometry, font and native-object checks.
 
 ## Rubric evidence
 
 | Rubric area | Evidence in the submission |
 |---|---|
-| Collection of Data, 5 marks | Identified CDC/Kaggle derivative, exact file checksum, full/sample class counts, seeded sampling, complete dictionary, missing/range/code checks, distinct and documented experimental sources. Report pages 2–3 and slides 3–5. |
-| Analysis, 5 marks | Summary/variance, multiple plot forms, outlier ledger and removal sensitivity, correlations/covariance, regression with confidence intervals and diagnostics, corrected probability fits and hypothesis tests, genuine experimental designs. Slides 6–24; report pages 4–15; all lab outputs. |
-| Review, 5 marks | Practical effect magnitudes, uncertainty, weak model explanation, distribution misfit, sensitivity to removal/method, design-specific findings and limitations linked to the aim. Report page 16 and slide 25. |
+| Collection of Data, 5 marks | Identified CDC/Kaggle derivative, exact file checksum, full/sample class counts, seeded sampling, complete dictionary, missing/range/code checks, distinct and documented experimental sources. Report pages 2–3 and content slides 1–2. |
+| Analysis, 5 marks | Summary/variance, multiple plot forms, outlier ledger and removal sensitivity, correlations/covariance, regression with confidence intervals and diagnostics, corrected probability fits and hypothesis tests, genuine experimental designs. Content slides 3–8 and 10; report pages 4–15; all lab outputs. |
+| Review, 5 marks | Practical effect magnitudes, uncertainty, weak model explanation, distribution misfit, sensitivity to removal/method, design-specific findings and limitations linked to the aim. Report page 16 and content slide 9. |
 | Final Submission, 5 marks | Clear title, four students' names/IDs, aim, source/method/results/conclusion/references, course-coverage appendix, numbered pages/slides, editable artifacts, notes, complete drawings and reproduction guide. |
 
 The mapping demonstrates evidence against the rubric; the faculty determines awarded marks.

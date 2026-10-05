@@ -1,15 +1,15 @@
 # Rehearsal and viva guide
 
-Use the 25-slide presentation for about 18 minutes, leaving time for questions. The PowerPoint notes contain the full explanations and source links. This guide supplies a simple speaking sequence and answers tied to the computed outputs.
+Use the revised presentation (one intro plus ten content slides) for about 17–18 minutes, leaving time for questions. The PowerPoint notes contain the full explanations and source links. This guide supplies a simple speaking sequence and answers tied to the computed outputs.
 
 ## Suggested division
 
 | Presenter | Slides | Time | Main responsibility |
 |---|---|---|---|
-| YASH RAJ | 1–7 | 4 minutes | Aim, sources, preparation, outliers and removal |
-| HRISHIKESH DAMODAR NAYAK | 8–14 | 5 minutes | Summary, graphs, correlations, regression and diagnostics |
-| HARDIK LALLA | 15–20 | 4 minutes | Distributions, hypothesis tests, independent and paired examples |
-| ARYAN RAJ | 21–25 | 5 minutes | Chi-square, ANOVA designs, findings and conclusion |
+| YASH RAJ | Intro and content 1–3 | 4 minutes | Aim, sources, preparation, outliers and removal |
+| HRISHIKESH DAMODAR NAYAK | Content 4–6 | 5 minutes | Summary, graphs, correlations, regression and diagnostics |
+| HARDIK LALLA | Content 7–8 | 4 minutes | Distributions, hypothesis tests, independent and paired examples |
+| ARYAN RAJ | Content 9–10 | 4–5 minutes | Findings and conclusion, then Experiments 10 and 11 |
 
 This is a suggested division, not a statement about who performed the original work. For a 15-minute slot, shorten graphical descriptions and show one important result per test. For 20 minutes, explain the assumption checks and design examples. Open the figure atlas for questions about diagnostic drawings.
 
@@ -17,7 +17,7 @@ This is a suggested division, not a statement about who performed the original w
 
 Say the question, identify the response/groups and sample, explain the method in one sentence, then give the estimate and uncertainty. Finish with what the result means for the aim. A small p-value alone is not a useful conclusion.
 
-Example for slide 12: “We asked whether more poor physical-health days are associated with BMI. Pearson correlation is 0.102, a weak positive relationship. The fitted slope is about 0.075 BMI units per additional day, and the line explains only 1.03% of BMI variation. The association is statistically detectable but has little explanatory power.”
+Example for content slide 5: “We asked whether more poor physical-health days are associated with BMI. Pearson correlation is 0.102, a weak positive relationship. The fitted slope is about 0.075 BMI units per additional day, and the line explains only 1.03% of BMI variation. The association is statistically detectable but has little explanatory power.”
 
 ## Hypotheses to know
 

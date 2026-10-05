@@ -6,7 +6,7 @@ The completed project covers all 11 experiments in the supplied BMAT202P syllabu
 
 ## Submission files
 
-- [25-slide PowerPoint with speaker notes](submission/Diabetes_Statistics_Presentation.pptx)
+- [One intro + 10 content slides, with speaker notes](submission/Diabetes_Statistics_Presentation.pptx)
 - [Presentation PDF](submission/Diabetes_Statistics_Slides.pdf)
 - [18-page mini project report, Word](submission/Diabetes_Statistics_Report.docx)
 - [Report PDF](submission/Diabetes_Statistics_Report.pdf)
@@ -15,7 +15,7 @@ The completed project covers all 11 experiments in the supplied BMAT202P syllabu
 - [Rubric and implementation review](report/FINAL_REVIEW.md)
 - [Rehearsal and viva guide](report/PRESENTER_GUIDE.md)
 
-The presentation is designed for 15–20 minutes. Its notes contain explanations, sources and timing suggestions. Tables and the dataset comparison chart are editable PowerPoint objects. Original R figures are embedded and supplied separately.
+The presentation has one intro plus ten numbered content slides and is designed for 15–20 minutes. Experiments 10 and 11 appear only on the final content slide. Its notes contain explanations, sources and timing suggestions. Tables and the dataset comparison chart are editable PowerPoint objects. Original R figures are embedded and supplied separately.
 
 ## Run the analysis
 
@@ -63,6 +63,10 @@ The agridat 1.26 supplements are `cochran.crd`, `gomez.seedrate` and `goulden.la
 
 ## Document sources
 
-`scripts/build_content.py` reads the saved results. `scripts/build_report.py` builds Word, the atlas and drawing ZIP. `scripts/build_presentation.mjs` uses the Codex presentation runtime. `scripts/render_office.ps1` exports PDFs and previews through installed Word and PowerPoint. Document rebuilding requires the Codex dependencies referenced in those scripts; running the analysis does not.
+`scripts/build_content.py` reads the saved results. `scripts/build_report.py` builds Word, the atlas and drawing ZIP. `scripts/build_pitch_figures.R` draws the compact charts. `scripts/build_presentation.mjs` runs the compact builder using the Codex presentation runtime. `scripts/render_compact_deck.ps1` exports the current slide PDF and previews through PowerPoint; `scripts/render_office.ps1` also renders the Word report. Document rebuilding requires the Codex dependencies referenced in those scripts; running the analysis does not.
 
 The [original plan](Maths_implementation.md) and [initial audit](AUDIT_AND_PRESENTATION_PLAN.md) remain historical records. Current completion evidence is in `report/FINAL_REVIEW.md`.
+
+## Rebuild the revised presentation
+
+After running the analysis, draw the compact charts with `Rscript scripts/build_pitch_figures.R`, prepare the content with `python scripts/build_content.py`, and build with `node scripts/build_presentation.mjs` using the documented Codex runtime. Export its PDF with `scripts/render_compact_deck.ps1`. The slide coverage checklist is in [report/PRESENTATION_COVERAGE.md](report/PRESENTATION_COVERAGE.md).

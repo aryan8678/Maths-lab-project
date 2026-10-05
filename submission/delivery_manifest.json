@@ -1,5 +1,8 @@
 {
-  "slides": 25,
+  "slides": 11,
+  "intro_slides": 1,
+  "content_slides": 10,
+  "experiments_10_11": "final slide only",
   "report_pages": 18,
   "drawings": 29,
   "completed_scripts": 17,
@@ -7,8 +10,8 @@
   "analysis_validation": "PASS: tests/validate_project.R",
   "visual_review": "All slide, report and atlas pages inspected; layout corrections verified.",
   "sha256": {
-    "Diabetes_Statistics_Presentation.pptx": "3c2c70abdf94e2351e5bc16b37166ebb0edb39cd64fe5a93dc283ac49448aced",
-    "Diabetes_Statistics_Slides.pdf": "152cfdea994e2ccd9b12cb842a2dd505b39e5e4a992843ec3f3675b025fe326a",
+    "Diabetes_Statistics_Presentation.pptx": "d7e9725d9a687ec456db063d479b92c67681c6368e3d070f275843f4810b328c",
+    "Diabetes_Statistics_Slides.pdf": "faac51ab7e15307c877f22fa132c4834395cdf0b7d1f044342b11d8d6311a837",
     "Diabetes_Statistics_Report.docx": "25a46973b230823defb845898eae457910eaac88e64755ef6ceec8531d864556",
     "Diabetes_Statistics_Report.pdf": "20012fd3a619bc1086f1f14e9498ea21c06d1f8c845ff3cbcb07a67615248567",
     "Complete_Figure_Atlas.pdf": "d51664b8a788ee830e37af98e6f6843796f23056139c224bfed60c17cb4b20e1",

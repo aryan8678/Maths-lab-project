@@ -10,11 +10,18 @@ NS={'p':'http://schemas.openxmlformats.org/presentationml/2006/main'}
 ppt=OUT/'Diabetes_Statistics_Presentation.pptx'
 with zipfile.ZipFile(ppt) as z:
     presentation=etree.fromstring(z.read('ppt/presentation.xml'))
-    assert len(presentation.findall('.//p:sldId',NS))==25
-    assert sum(n.startswith('ppt/notesSlides/notesSlide') and n.endswith('.xml') for n in z.namelist())==25
+    assert len(presentation.findall('.//p:sldId',NS))==11
+    assert sum(n.startswith('ppt/notesSlides/notesSlide') and n.endswith('.xml') for n in z.namelist())==11
     assert any('/charts/chart' in n and n.endswith('.xml') for n in z.namelist())
+    text_ns={'a':'http://schemas.openxmlformats.org/drawingml/2006/main'}
+    for i in range(1,12):
+        tree=etree.fromstring(z.read(f'ppt/slides/slide{i}.xml'))
+        visible=' '.join(tree.xpath('//a:t/text()',namespaces=text_ns))
+        assert not any(term in visible.lower() for term in ['unweighted data proportions','original sample remains available'])
+        if i<11:assert not any(term in visible for term in ['Chi-square','ANOVA','CRD','RBD','Latin Square'])
+        else:assert all(term in visible for term in ['Chi-square','ANOVA','CRD','RBD','Latin Square'])
 assert len(PdfReader(OUT/'Diabetes_Statistics_Report.pdf').pages)==18
-assert len(PdfReader(OUT/'Diabetes_Statistics_Slides.pdf').pages)==25
+assert len(PdfReader(OUT/'Diabetes_Statistics_Slides.pdf').pages)==11
 assert len(PdfReader(OUT/'Complete_Figure_Atlas.pdf').pages)==29
 with (ROOT/'Lab14_Consolidation/output/figure_inventory.csv').open(newline='',encoding='utf-8-sig') as f:
     figures=list(csv.DictReader(f))
@@ -32,7 +39,8 @@ names=['Diabetes_Statistics_Presentation.pptx','Diabetes_Statistics_Slides.pdf',
        'Diabetes_Statistics_Report.docx','Diabetes_Statistics_Report.pdf',
        'Complete_Figure_Atlas.pdf','All_Drawings.zip']
 hashes={n:hashlib.sha256((OUT/n).read_bytes()).hexdigest() for n in names}
-evidence={'slides':25,'report_pages':18,'drawings':29,'completed_scripts':17,
+evidence={'slides':11,'intro_slides':1,'content_slides':10,'experiments_10_11':'final slide only',
+          'report_pages':18,'drawings':29,'completed_scripts':17,
           'source_commit':'2bfebaedd34c387206d70c8a362234e1cd425c2d',
           'analysis_validation':'PASS: tests/validate_project.R',
           'visual_review':'All slide, report and atlas pages inspected; layout corrections verified.',
