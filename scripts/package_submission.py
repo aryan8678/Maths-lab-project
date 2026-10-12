@@ -44,6 +44,9 @@ evidence={'slides':11,'intro_slides':1,'content_slides':10,'experiments_10_11':'
           'source_commit':'2bfebaedd34c387206d70c8a362234e1cd425c2d',
           'analysis_validation':'PASS: tests/validate_project.R',
           'visual_review':'All slide, report and atlas pages inspected; layout corrections verified.',
+          'study_guide':{'path':'report/presentation_content.md',
+                         'scope':'Intro and all ten content slides; foundations, 29 drawings, R implementation, 48 review questions',
+                         'sha256':hashlib.sha256((ROOT/'report/presentation_content.md').read_bytes()).hexdigest()},
           'sha256':hashes}
 (OUT/'delivery_manifest.json').write_text(json.dumps(evidence,indent=2),encoding='utf-8')
 bundle=OUT/'Complete_Submission_Pack.zip'

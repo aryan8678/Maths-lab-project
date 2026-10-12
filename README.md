@@ -14,8 +14,11 @@ The completed project covers all 11 experiments in the supplied BMAT202P syllabu
 - [All original drawings](submission/All_Drawings.zip)
 - [Rubric and implementation review](report/FINAL_REVIEW.md)
 - [Rehearsal and viva guide](report/PRESENTER_GUIDE.md)
+- [Complete beginner study guide for every slide](report/presentation_content.md)
 
 The presentation has one intro plus ten numbered content slides and is designed for 15–20 minutes. Experiments 10 and 11 appear only on the final content slide. Its notes contain explanations, sources and timing suggestions. Tables and the dataset comparison chart are editable PowerPoint objects. Original R figures are embedded and supplied separately.
+
+For faculty-review preparation, start with [the complete study guide](report/presentation_content.md). It teaches the statistical foundations, explains all slides and all 29 drawings, works through the actual results, maps them to the R implementation, and includes 48 practice questions with answers. The generated [short slide text and notes](report/slide_content_and_notes.md) are separate, so rebuilding the deck preserves the study guide.
 
 ## Run the analysis
 

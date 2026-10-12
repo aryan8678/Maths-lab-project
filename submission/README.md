@@ -1,5 +1,7 @@
 # Submission pack
 
+The [complete beginner study guide](../report/presentation_content.md) explains the theory and results behind every slide, all 29 drawings, and the R implementation. It includes 48 faculty-review practice questions and answers. Read it before using the shorter rehearsal guide.
+
 Main files: `Diabetes_Statistics_Presentation.pptx` (one intro plus ten content slides, with notes) and `Diabetes_Statistics_Report.pdf` (18 pages). The editable Word report and presentation PDF are also included.
 
 `Complete_Figure_Atlas.pdf` contains every one of the 29 R drawings. `All_Drawings.zip` contains the original PNGs, organised by lab, and the atlas.

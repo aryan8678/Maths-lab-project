@@ -137,7 +137,8 @@ payload={'title':'Statistical analysis of diabetes and lifestyle indicators',
  'metrics':{'setup':A,'outliers':O,'correlation':C,'multiple':M,'binomial':B,'fits':N,'paired':P,'anova':V,'rbd':R,'latin':L}}
 (BUILD/'compact_content.json').write_text(json.dumps(payload,indent=2,ensure_ascii=False),encoding='utf-8')
 (BUILD/'content.json').write_text(json.dumps(payload,indent=2,ensure_ascii=False),encoding='utf-8')
-(ROOT/'report/presentation_content.md').write_text('\n\n'.join(f"## {'Intro' if i==0 else str(i)}. {s['title']}\n\n{s['body']}\n\n{s.get('takeaway','')}\n\nSpeaker notes: {s['notes']}" for i,s in enumerate(slides)),encoding='utf-8')
+# Keep the manually maintained beginner study guide intact when rebuilding.
+(ROOT/'report/slide_content_and_notes.md').write_text('\n\n'.join(f"## {'Intro' if i==0 else str(i)}. {s['title']}\n\n{s['body']}\n\n{s.get('takeaway','')}\n\nSpeaker notes: {s['notes']}" for i,s in enumerate(slides)),encoding='utf-8')
 coverage='''# Coverage of the revised presentation
 
 The presentation has **one intro plus ten content slides**. Content slides are numbered 1–10; the cover is excluded. Experiments 10 and 11 appear only on content slide 10 (PowerPoint slide 11).

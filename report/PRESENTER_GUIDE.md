@@ -1,5 +1,7 @@
 # Rehearsal and viva guide
 
+For theory from the beginning and detailed explanations of every slide, read [the complete project study guide](presentation_content.md) first. This shorter guide is for speaking practice after you understand the methods.
+
 Use the revised presentation (one intro plus ten content slides) for about 17–18 minutes, leaving time for questions. The PowerPoint notes contain the full explanations and source links. This guide supplies a simple speaking sequence and answers tied to the computed outputs.
 
 ## Suggested division
