@@ -1,4 +1,4 @@
-"""Build eleven content slides plus a cover from the verified lab outputs."""
+"""Build twelve content slides plus a cover from the verified lab outputs."""
 from pathlib import Path
 import csv,json
 ROOT=Path(__file__).resolve().parents[1]
@@ -99,12 +99,34 @@ slide('Fitting probability distributions','distributions',
  descriptions=[['Binomial','Positive cases in groups of 10.\np = 0.156, 300 groups.','Test p = 0.962','Fits the grouped counts reasonably.'],['Normal','BMI: mean 28.40, SD 6.35.\nThe curve misses the long tail.','Test p < 0.001','BMI is not normally distributed.'],['Poisson','Physical-health days: mean 4.15,\nvariance 74.24. Many zeros.','Test p < 0.001','Variance is far above the mean.']],
  takeaway='A useful analysis explains why a model fits or fails.')
 pair=rows('Lab09_Paired_TTest/output/paired_weights.csv')
-slide('Hypothesis tests and paired measurements','tests',
- 'At α = 0.05, p < 0.05 supports a difference. Read the size of the change too.',
- 'Course Experiments7/8/9, Labs07/08/09a/09b. All alternatives two-sided. BMI27 and positive proportion11% are hypothetical classroom benchmarks. Welch BMI differencefemale−male−.6494,CI−1.0958 to−.2030,p.004368; smokerpositive14.087% versus17.361%,difference−3.273pp,CI−5.953 to−.594,p.015765 using continuity correction. PhysHlthfemale−male1.2463days,CI.6343 to1.8584,p<.001. Genuine paired example uses29 CBT patients from MASS anorexia, postminuspre mean3.0069lb,CI.2269 to5.7869,t2.2156,df28,p.0350. Non-normal differences Shapiro.00795 and signed-rank sensitivityp.0645 make this result method-sensitive. A within-group change does not prove treatment efficacy. Patient trajectories are blue and average orange. Suggested time:150 seconds.',
- table=[['Question / comparison','Method','Result','p'],['Mean BMI vs 27','One-sample t','28.40','<0.001'],['Positive share vs 11%','One proportion','15.63%','<0.001'],['BMI: female − male','Welch t','−0.65','0.004'],['Positive share: never / ever smoked','Two proportions','14.09% / 17.36%','0.016'],['Poor-health days: female − male','Independent t','+1.25 days','<0.001'],['Weight: after − before','Paired t','+3.01 lb','0.035']],
+bmi_sex=rows('Lab08_TwoSample_Tests/output/bmi_by_sex.csv')
+smoking_tests=rows('Lab08_TwoSample_Tests/output/smoking_rates.csv')
+physical_sex=rows('Lab09_Paired_TTest/output/phys_days_by_sex.csv')
+one_tests=rows('Lab07_OneSample_Tests/output/tests.csv')
+two_tests=rows('Lab08_TwoSample_Tests/output/tests.csv')
+independent_test=rows('Lab09_Paired_TTest/output/independent_test.csv')[0]
+paired_test=rows('Lab09_Paired_TTest/output/paired_test.csv')[0]
+slide('One- and two-sample hypothesis tests','sample_tests',
+ 'Lab 7 compares a sample with a reference. Lab 8 compares two groups. We use α = 0.05.',
+ 'Course Experiments7/8 only. All alternatives are two-sided. One-sample BMI benchmark27 and combined-positive benchmark11% are hypothetical classroom assumptions. MeanBMI28.3983,95%CI28.1710–28.6257,t12.0587,df2999,p<.001. Positive469/3000=.156333,95%CI .143617–.169940,continuity-corrected score-test chi-square65.3124,p<.001. Welch independent BMI comparison: female mean28.1098,male28.7592,differencefemale−male−.649412,CI−1.095818to−.203006,p .004368. Never/ever100-cigarette combined-positive shares223/1583=.140872 versus246/1417=.173606,differencenever−ever−.032734,CI−.059530to−.005939,p .015765 with continuity correction. Counts use the explicit positive event: prediabetes OR diabetes. Charts show observed group means/proportions; captions give confidence intervals for differences, not for individual measurements. All rows use the primary3000 sample. Suggested time:100 seconds.',
+ table=[['Question / comparison','Method','Result','p'],
+ ['Mean BMI vs 27','One-sample t',f(one_tests[0]['estimate'])+' (above 27)',p(one_tests[0]['p'])],
+ ['Positive share vs 11%','One proportion',f(100*float(one_tests[1]['estimate']))+'% (above 11%)',p(one_tests[1]['p'])],
+ ['BMI: female − male','Welch t',f(two_tests[0]['estimate'])+' BMI units',p(two_tests[0]['p'])],
+ ['Positive share: never / ever smoked','Two proportions',f(100*float(smoking_tests[0]['rate']))+'% / '+f(100*float(smoking_tests[1]['rate']))+'%',p(two_tests[1]['p'])]],
+ bmi_sex={'categories':[r['group'] for r in bmi_sex],'series':[{'name':'Mean BMI','values':[round(float(r['mean']),4) for r in bmi_sex]}]},
+ smoking={'categories':['Never 100 cigarettes','Ever 100 cigarettes'],'series':[{'name':'Positive status (%)','values':[round(100*float(r['rate']),4) for r in smoking_tests]}]},
+ bmi_caption=f"Female − male: {f(two_tests[0]['estimate'])} BMI units.\n95% CI: {f(two_tests[0]['lower'])} to {f(two_tests[0]['upper'])}.",
+ smoking_caption=f"Never − ever: {f(100*float(two_tests[1]['estimate']))} percentage points.\n95% CI: {f(100*float(two_tests[1]['lower']))} to {f(100*float(two_tests[1]['upper']))} points.",
+ takeaway='All four tests find differences at p < 0.05. References 27 and 11% are classroom assumptions.')
+slide('Independent and paired t-tests','paired_tests',
+ 'Independent tests compare different people. Paired tests compare the same person before and after.',
+ 'Course Experiment9 only, with independent and dependent (paired) tests. Independent example: BRFSS female n1667,male n1333; poor physical-health days means4.705459 and3.459115; Welch t3.992741,df2956.428,p .0000669; female−male1.246344days,95%CI .634286to1.858402. Different respondents; the bounded skewed count warrants a cautious mean comparison. Paired example: genuine29CBT patients from MASS anorexia, postminuspre mean3.006897lb,CI .226890to5.786903,t2.215588,df28,p .035023. Blue lines join the same patient, orange line joins means82.6897and85.6966lb. Paired t tests the average within-patient difference against zero. Differences Shapiro p .007945 and signed-rank sensitivity p .064466 qualify the result. Within-group change does not prove therapy caused it. Data sets stay separate; the paired data do not come from BRFSS. Suggested time:100 seconds.',
+ physical_sex={'categories':[r['group'] for r in physical_sex],'series':[{'name':'Mean physical poor-health days','values':[round(float(r['mean']),4) for r in physical_sex]}]},
+ independent_table=[['Independent Welch t-test','Result'],['Female − male','+'+f(independent_test['estimate'])+' days'],['95% CI','+'+f(independent_test['lower'])+' to +'+f(independent_test['upper'])+' days'],['p',p(independent_test['p'])]],
+ paired_table=[['Paired t-test: after − before','Result'],['Mean change','+'+f(paired_test['estimate'])+' lb'],['95% CI','+'+f(paired_test['lower'])+' to +'+f(paired_test['upper'])+' lb'],['p',p(paired_test['p'])]],
  paired={'categories':['Before','After'],'series':[{'name':f"Patient {r['pair']}",'values':[float(r['pre']),float(r['post'])]} for r in pair]+[{'name':'Mean','values':[round(P['pre_mean'],4),round(P['post_mean'],4)]}]},
- takeaway='Paired tests compare the same people twice. Independent tests compare different groups.')
+ takeaway='Females report more poor-health days on average. The paired average weight increases by 3.01 lb.')
 slide('Findings and conclusion','review',
  'BMI differs across health groups, but the fitted lifestyle model explains little of its variation.',
  'Review rubric: connect findings to the aim. Values come from Lab02/03/04/01B/06. Group means differ with overlap, not diagnostic separation. Discuss practical magnitude alongside significance. The survey is self-reported/historical with omitted survey weights, confounding and sparse subgroups; these belong in the technical notes/report. Explain simple visible limitations: self-report, small groups, associations not causation. Further work could add useful predictors and repeat/check the models. Detailed chi-square/ANOVA/design findings are confined to the final slide, as requested. Suggested time:80 seconds.',
@@ -163,18 +185,19 @@ lab_headers={
  'correlation':'LAB 3: Correlation, simple linear regression and R²',
  'multiple':'LAB 4: Multiple linear regression',
  'distributions':'LAB 5: Binomial fitting     LAB 6: Normal and Poisson fitting',
- 'tests':'LAB 7: One-sample tests     LAB 8: Two-sample tests     LAB 9: Independent and paired t-tests',
+ 'sample_tests':'LAB 7: One-sample mean/proportion tests     LAB 8: Two-sample mean/proportion tests',
+ 'paired_tests':'LAB 9: Independent and dependent (paired) t-tests',
  'chi':'LAB 10: Chi-square goodness of fit and contingency tables',
  'anova':'LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square',
  'review':'LABS 1–11: Findings, limitations and next steps'}
 for item in slides:item['lab_header']=lab_headers[item['kind']]
-assert len(slides)==12
+assert len(slides)==13
 assert slides[-3]['kind']=='chi' and slides[-2]['kind']=='anova' and slides[-1]['kind']=='review'
 import re
-for item, seconds in zip(slides, [20,65,50,80,80,90,90,90,110,90,150,100]):
+for item, seconds in zip(slides, [20,60,45,75,75,85,85,85,100,100,85,145,100]):
  item['notes']=re.sub(r'Suggested time:\s*\d+\s*seconds', f'Suggested time: {seconds} seconds', item['notes'])
 payload={'title':'Statistical analysis of diabetes and lifestyle indicators',
- 'authors':authors,'sources':sources,'slides':slides,'requestedContentSlides':11,
+ 'authors':authors,'sources':sources,'slides':slides,'requestedContentSlides':12,
  'tables':{'summary':summary,'before_after':before,'joint':joint,
            'tests':rows('report/consolidated_tests.csv'),
            'coefficients':rows('Lab04_Multiple_Regression/output/coefficients.csv')},
@@ -185,7 +208,7 @@ payload={'title':'Statistical analysis of diabetes and lifestyle indicators',
 (ROOT/'report/slide_content_and_notes.md').write_text('\n\n'.join(f"## {'Intro' if i==0 else str(i)}. {s['title']}\n\n{s['lab_header']}\n\n{s['body']}\n\n{s.get('takeaway','')}\n\nSpeaker notes: {s['notes']}" for i,s in enumerate(slides)),encoding='utf-8')
 coverage='''# Coverage of the revised presentation
 
-The presentation has **one intro plus eleven content slides**. Content slides are numbered 1–11; the cover is excluded. Lab 10 has content slide 9, Lab 11 has content slide 10, and the expanded conclusion is content slide 11. Every slide identifies its syllabus exercise at the top.
+The presentation has **one intro plus twelve content slides**. Content slides are numbered 1–12; the cover is excluded. Content slide 8 covers Labs 7–8; content slide 9 covers Lab 9. Lab 10 is content slide 10, Lab 11 is content slide 11, and the expanded conclusion is content slide 12. Every slide identifies its syllabus exercise at the top.
 
 | Required topic | Content slide |
 |---|---|
@@ -196,12 +219,13 @@ The presentation has **one intro plus eleven content slides**. Content slides ar
 | Correlation, covariance and simple regression | 5 |
 | Multiple regression and model diagnostics | 6 |
 | Binomial, normal and Poisson models | 7 |
-| One-/two-sample, independent and paired tests | 8 |
-| Experiment 10: chi-square GOF and contingency | 9 |
-| Experiment 11: one-way ANOVA, CRD, RBD, Latin Square | 10 |
-| Findings, limitations and next steps | 11 (final slide) |
+| Experiments 7–8: one-/two-sample mean and proportion tests | 8 |
+| Experiment 9: independent and paired t-tests | 9 |
+| Experiment 10: chi-square GOF and contingency | 10 |
+| Experiment 11: one-way ANOVA, CRD, RBD, Latin Square | 11 |
+| Findings, limitations and next steps | 12 (final slide) |
 
-Rubric evidence: Collection of Data on 1–2; Analysis on 3–10; Review on 11 and the result explanations; Final Submission through the organized deck, references in notes, existing report and complete drawing atlas. All 29 original drawings remain attached in the atlas/ZIP. The previous combined final slide is split as requested, with the conclusion at the end.
+Rubric evidence: Collection of Data on 1–2; Analysis on 3–11; Review on 12 and the result explanations; Final Submission through the organized deck, references in notes, existing report and complete drawing atlas. All 29 original drawings remain attached in the atlas/ZIP. Labs 7–8 and Lab 9 have separate content-rich slides. Lab 10/11 remain separate, with the conclusion at the end.
 '''
 (ROOT/'report/PRESENTATION_COVERAGE.md').write_text(coverage,encoding='utf-8')
-print('Prepared 1 intro + 11 content slides; Lab 10 and Lab 11 are separate, followed by the conclusion.')
+print('Prepared 1 intro + 12 content slides; Labs 7–8 and Lab 9 have separate result slides.')

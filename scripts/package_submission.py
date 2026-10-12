@@ -10,21 +10,23 @@ NS={'p':'http://schemas.openxmlformats.org/presentationml/2006/main'}
 ppt=OUT/'Diabetes_Statistics_Presentation.pptx'
 with zipfile.ZipFile(ppt) as z:
     presentation=etree.fromstring(z.read('ppt/presentation.xml'))
-    assert len(presentation.findall('.//p:sldId',NS))==12
-    assert sum(n.startswith('ppt/notesSlides/notesSlide') and n.endswith('.xml') for n in z.namelist())==12
+    assert len(presentation.findall('.//p:sldId',NS))==13
+    assert sum(n.startswith('ppt/notesSlides/notesSlide') and n.endswith('.xml') for n in z.namelist())==13
     assert any('/charts/chart' in n and n.endswith('.xml') for n in z.namelist())
     text_ns={'a':'http://schemas.openxmlformats.org/drawingml/2006/main'}
-    for i in range(1,13):
+    for i in range(1,14):
         tree=etree.fromstring(z.read(f'ppt/slides/slide{i}.xml'))
         visible=' '.join(tree.xpath('//a:t/text()',namespaces=text_ns))
         assert not any(term in visible.lower() for term in ['unweighted data proportions','original sample remains available'])
         assert 'LAB' in visible
-        if i<10:assert not any(term in visible for term in ['Chi-square','ANOVA','CRD','RBD','Latin Square'])
-        elif i==10:assert all(term in visible for term in ['LAB 10','Chi-square']) and 'ANOVA' not in visible
-        elif i==11:assert all(term in visible for term in ['LAB 11','ANOVA','CRD','RBD','Latin Square'])
+        if i==9:assert all(term in visible for term in ['LAB 7','LAB 8']) and 'LAB 9' not in visible
+        if i==10:assert 'LAB 9' in visible and 'LAB 7' not in visible and 'LAB 8' not in visible
+        if i<11:assert not any(term in visible for term in ['Chi-square','ANOVA','CRD','RBD','Latin Square'])
+        elif i==11:assert all(term in visible for term in ['LAB 10','Chi-square']) and 'ANOVA' not in visible
+        elif i==12:assert all(term in visible for term in ['LAB 11','ANOVA','CRD','RBD','Latin Square'])
         else:assert all(term in visible for term in ['Conclusion','Limits','Next steps'])
 assert len(PdfReader(OUT/'Diabetes_Statistics_Report.pdf').pages)==18
-assert len(PdfReader(OUT/'Diabetes_Statistics_Slides.pdf').pages)==12
+assert len(PdfReader(OUT/'Diabetes_Statistics_Slides.pdf').pages)==13
 assert len(PdfReader(OUT/'Complete_Figure_Atlas.pdf').pages)==29
 with (ROOT/'Lab14_Consolidation/output/figure_inventory.csv').open(newline='',encoding='utf-8-sig') as f:
     figures=list(csv.DictReader(f))
@@ -42,15 +44,16 @@ names=['Diabetes_Statistics_Presentation.pptx','Diabetes_Statistics_Slides.pdf',
        'Diabetes_Statistics_Report.docx','Diabetes_Statistics_Report.pdf',
        'Complete_Figure_Atlas.pdf','All_Drawings.zip']
 hashes={n:hashlib.sha256((OUT/n).read_bytes()).hexdigest() for n in names}
-evidence={'slides':12,'intro_slides':1,'content_slides':11,
-          'experiments_10_11':'separate content slides 9 and 10; conclusion on final content slide 11',
+evidence={'slides':13,'intro_slides':1,'content_slides':12,
+          'experiments_7_8_9':'Labs 7–8 on content slide 8; Lab 9 on content slide 9',
+          'experiments_10_11':'separate content slides 10 and 11; conclusion on final content slide 12',
           'lab_labels':'Every slide identifies its syllabus exercise at the top',
           'report_pages':18,'drawings':29,'completed_scripts':17,
           'source_commit':'2bfebaedd34c387206d70c8a362234e1cd425c2d',
           'analysis_validation':'PASS: tests/validate_project.R',
           'visual_review':'All slide, report and atlas pages inspected; layout corrections verified.',
           'study_guide':{'path':'report/presentation_content.md',
-                         'scope':'Intro and all eleven content slides; foundations, 29 drawings, R implementation, 48 review questions',
+                         'scope':'Intro and all twelve content slides; foundations, 29 drawings, R implementation, 48 review questions',
                          'sha256':hashlib.sha256((ROOT/'report/presentation_content.md').read_bytes()).hexdigest()},
           'sha256':hashes}
 (OUT/'delivery_manifest.json').write_text(json.dumps(evidence,indent=2),encoding='utf-8')

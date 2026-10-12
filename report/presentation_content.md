@@ -6,7 +6,7 @@
 
 **Guide updated:** 12 October 2026
 
-This guide explains **the intro and all eleven numbered content slides**, including the theory, actual calculations, reasons for choosing each method, and how to answer faculty questions. It is deliberately much longer than the presentation. The deck has one intro plus eleven content slides. Lab 10 is content slide 9, Lab 11 is content slide 10, and the expanded conclusion is the final content slide 11. Each slide identifies the course exercise at the top.
+This guide explains **the intro and all twelve numbered content slides**, including the theory, actual calculations, reasons for choosing each method, and how to answer faculty questions. It is deliberately much longer than the presentation. The deck has one intro plus twelve content slides. Labs 7–8 are on content slide 8, Lab 9 is on content slide 9, Lab 10 is on content slide 10, Lab 11 is on content slide 11, and the expanded conclusion is final content slide 12. Each slide identifies the course exercise at the top.
 
 Project numbers come from the saved R outputs. Small invented numbers used to explain a formula are labelled **teaching example**. The [short slide text and speaker notes](slide_content_and_notes.md) are saved separately, so rebuilding the presentation will not overwrite this study guide.
 
@@ -25,10 +25,11 @@ Read the foundations first and then follow the slides in order. For every slide,
 - [Slide 5: correlation and simple regression](#slide-5-correlation-and-simple-regression)
 - [Slide 6: multiple regression and model checks](#slide-6-multiple-regression-and-model-checks)
 - [Slide 7: fitting probability distributions](#slide-7-fitting-probability-distributions)
-- [Slide 8: hypothesis tests and paired measurements](#slide-8-hypothesis-tests-and-paired-measurements)
-- [Slide 9: chi-square category patterns and relationships](#slide-9-chi-square-category-patterns-and-relationships)
-- [Slide 10: ANOVA and experimental designs](#slide-10-anova-and-experimental-designs)
-- [Slide 11: findings and conclusion](#slide-11-findings-and-conclusion)
+- [Slide 8: one- and two-sample hypothesis tests](#slide-8-one--and-two-sample-hypothesis-tests)
+- [Slide 9: independent and paired t-tests](#slide-9-independent-and-paired-t-tests)
+- [Slide 10: chi-square category patterns and relationships](#slide-10-chi-square-category-patterns-and-relationships)
+- [Slide 11: ANOVA and experimental designs](#slide-11-anova-and-experimental-designs)
+- [Slide 12: findings and conclusion](#slide-12-findings-and-conclusion)
 - [R implementation and file map](#r-implementation-and-file-map)
 - [Every original drawing explained](#every-original-drawing-explained)
 - [Review questions and answer key](#review-questions-and-answer-key)
@@ -568,7 +569,7 @@ A probability distribution assigns probabilities to possible outcomes. For discr
 
 **Observed frequency** is what we counted. **Expected frequency** is what a proposed model predicts on average. Comparing them tells us whether the model is a reasonable description.
 
-This slide covers course Experiments 5 and 6. Its distribution-fit calculations use a goodness-of-fit procedure behind the scenes. The dedicated Experiment 10 discussion has its own content slide 9 in the presentation; this learning guide explains the connections so you can answer questions.
+This slide covers course Experiments 5 and 6. Its distribution-fit calculations use a goodness-of-fit procedure behind the scenes. The dedicated Experiment 10 discussion has its own content slide 10 in the presentation; this learning guide explains the connections so you can answer questions.
 
 ### A. Binomial: positive statuses in groups of ten
 
@@ -686,21 +687,20 @@ Binomial is reasonably consistent with this grouped teaching example. Normal and
 
 **Faculty may ask:** “Does p = 0.962 prove a perfect binomial fit?” Answer: “No. It means this test finds no strong evidence against the fitted pattern in these bins under the assumptions.”
 
-## Slide 8: hypothesis tests and paired measurements
+## Slide 8: one- and two-sample hypothesis tests
 
-**Exercise header:** LAB 7: One-sample tests; LAB 8: Two-sample tests; LAB 9: Independent and paired t-tests
+**Exercise header:** LAB 7: One-sample mean/proportion tests; LAB 8: Two-sample mean/proportion tests
 
 ### Choosing the test from the question
 
-Numerical averages require mean-comparison methods; yes/no outcomes require proportion methods. Then ask whether there is one sample compared with a reference, two separate groups, or repeated measurements on the same people.
+Numerical averages require mean-comparison methods; yes/no outcomes require proportion methods. This slide covers one sample compared with a reference and two separate groups. The next slide treats the independent/paired distinction as its own Lab 9 exercise.
 
 | Situation | Project method | Why it matches the question |
 |---|---|---|
 | One numerical sample vs reference mean | One-sample t-test | Compares mean BMI with 27 |
 | One yes/no sample vs reference probability | One-proportion score test | Compares combined-positive share with 11% |
-| Two separate numerical groups | Welch independent t-test | Compares female/male BMI or physical days |
+| Two separate numerical groups | Welch independent t-test | Compares female/male BMI |
 | Two separate yes/no groups | Two-proportion score test | Compares combined-positive shares by ever-smoking |
-| Same people measured twice | Paired t-test | Compares each patient's after-minus-before weight |
 
 Our alternatives are two-sided. Values **BMI 27 and proportion 11% are hypothetical classroom benchmarks**, not externally verified population values or a medical healthy/unhealthy boundary.
 
@@ -763,7 +763,27 @@ Use the explicit positive counts in the numerator. Counting the “No diabetes�
 
 This is an unadjusted group association with health status. It can coexist with smoking's nonsignificant adjusted BMI coefficient in slide 6: the response and statistical question differ.
 
-### E. Independent physical-day comparison
+### How the expanded slide presents the results
+
+The four-row table separates the two one-sample questions from the two group comparisons. Beneath it, the BMI bar chart shows female mean 28.11 and male mean 28.76. The smoking chart shows combined-positive shares of 14.09% and 17.36%. Both begin their y-axis at zero, and labels give the actual values so a small difference is not exaggerated.
+
+The captions show confidence intervals for **differences**, not ranges for individual people. Female-minus-male BMI is −0.65 with interval −1.10 to −0.20. Never-minus-ever-smoking share differs by −3.27 percentage points, with interval −5.95 to −0.59. The direction depends on the subtraction order.
+
+**Evidence:** [one-sample results](../Lab07_OneSample_Tests/output/tests.csv), [two-sample results](../Lab08_TwoSample_Tests/output/tests.csv), [BMI group means](../Lab08_TwoSample_Tests/output/bmi_by_sex.csv), [smoking group counts](../Lab08_TwoSample_Tests/output/smoking_rates.csv).
+
+**Say it simply:** “Lab 7 compares our sample with classroom reference values. Lab 8 compares two groups. Each test provides evidence of a difference, and the graphs and intervals show its size.”
+
+**Faculty may ask:** “Are the reference values established national averages?” Answer: “No. BMI 27 and positive share 11% are explicitly hypothetical classroom benchmarks.”
+
+## Slide 9: independent and paired t-tests
+
+**Exercise header:** LAB 9: Independent and dependent (paired) t-tests
+
+This slide gives Lab 9 its own space. The left side compares different survey respondents; the right side compares each patient's repeated weights. Each side shows its data, graph, difference, confidence interval and p-value.
+
+The independent chart has female/male mean physical poor-health days of 4.71 and 3.46. The paired chart joins the same patient's before/after observations, with the group mean in orange. The two examples use separate datasets and different units.
+
+### A. Independent physical-day comparison
 
 The course asks for an independent t-test separately, so we also compare numerical physical poor-health days between female and male respondents. This uses Welch's independent test, not the paired method.
 
@@ -775,7 +795,7 @@ t.test(PhysHlth ~ Sex, data = df)
 
 Counts are bounded and skewed, so we interpret this as a cautious mean comparison. It does not say every female respondent reports more days than every male respondent.
 
-### F. Paired t-test: the same patients before and after
+### B. Paired t-test: the same patients before and after
 
 BRFSS has no genuine repeated before/after measurement in this extract. Pairing random survey rows would be invalid. We instead use the **CBT subgroup of the MASS `anorexia` dataset**, containing **29 patients** with pre- and post-treatment weights. CBT means cognitive behavioural treatment in the source documentation.
 
@@ -819,7 +839,7 @@ We can say the paired t-test detects an average increase at alpha 0.05, with thi
 
 The mean difference tells us how much groups differ. The interval expresses uncertainty and the sign/direction. The p-value assesses compatibility with a specified null. All three are needed for a useful explanation.
 
-Many tests across the project are course demonstrations. Testing many hypotheses increases the chance of some small p-values. We apply multiplicity adjustments for the specific post-hoc families in slide 10, but do not claim one global adjustment across every exploratory project test.
+Many tests across the project are course demonstrations. Testing many hypotheses increases the chance of some small p-values. We apply multiplicity adjustments for the specific post-hoc families in slide 11, but do not claim one global adjustment across every exploratory project test.
 
 **Evidence:** [one-sample results](../Lab07_OneSample_Tests/output/tests.csv), [two-sample results](../Lab08_TwoSample_Tests/output/tests.csv), [smoking counts](../Lab08_TwoSample_Tests/output/smoking_rates.csv), [independent-day result](../Lab09_Paired_TTest/output/independent_test.csv), [paired script](../Lab09_Paired_TTest/09b_paired_ttest.R), [paired result](../Lab09_Paired_TTest/output/paired_test.csv), [paired assumptions/sensitivity](../Lab09_Paired_TTest/output/metrics.csv).
 
@@ -827,7 +847,7 @@ Many tests across the project are course demonstrations. Testing many hypotheses
 
 **Faculty may ask:** “Why use another dataset for the paired test?” Answer: “The survey does not contain the required repeated measurements. The published CBT data provide real before/after pairs.”
 
-## Slide 9: chi-square category patterns and relationships
+## Slide 10: chi-square category patterns and relationships
 
 **Exercise header:** LAB 10: Chi-square goodness of fit and contingency tables
 
@@ -887,7 +907,7 @@ Smoking p is 0.014 here versus 0.016 for the two-proportion test in slide 8 beca
 
 **Evidence:** [chi-square script](../Lab10_ChiSquare_Tests/10_chisquare_tests.R), [results](../Lab10_ChiSquare_Tests/output/tests.csv), [BP percentages](../Lab10_ChiSquare_Tests/output/HighBP_rates.csv).
 
-## Slide 10: ANOVA and experimental designs
+## Slide 11: ANOVA and experimental designs
 
 **Exercise header:** LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square
 
@@ -1042,7 +1062,7 @@ A nonsignificant column test does not require removing the column factor: it is 
 
 **Faculty may ask:** “Why include agricultural data in a health project?” Answer: “The survey cannot demonstrate genuine randomized designs. We use clearly labelled published supplements to cover the required methods without inventing randomization.”
 
-## Slide 11: findings and conclusion
+## Slide 12: findings and conclusion
 
 **Exercise header:** LABS 1–11: Findings, limitations and next steps
 
@@ -1155,10 +1175,10 @@ There are **11 syllabus experiments and 17 executed scripts**. Some experiments 
 | 6 | 4: multiple regression | `Lab04_Multiple_Regression/04_multiple_regression.R` |
 | 7 | 5: binomial; 6: normal/Poisson | `Lab05_Binomial_Fitting/05_binomial_fitting.R`; `Lab06_Normal_Poisson_Fitting/06_normal_poisson_fitting.R` |
 | 8 | 7: one sample; 8: two samples | `Lab07_OneSample_Tests/07_onesample_tests.R`; `Lab08_TwoSample_Tests/08_twosample_tests.R` |
-| 8 | 9: independent/dependent t-tests | `Lab09_Paired_TTest/09_independent_ttest.R`; `Lab09_Paired_TTest/09b_paired_ttest.R` |
-| 9 | 10: chi-square | `Lab10_ChiSquare_Tests/10_chisquare_tests.R` |
-| 10 | 11: CRD/RBD/Latin | `Lab11_ANOVA_CRD/11_anova_crd.R`; `Lab12_ANOVA_RBD/12_anova_rbd.R`; `Lab13_Latin_Square/13_latin_square.R` |
-| 11 and supporting outputs | Consolidation | `Lab14_Consolidation/14_consolidation.R` |
+| 9 | 9: independent/dependent t-tests | `Lab09_Paired_TTest/09_independent_ttest.R`; `Lab09_Paired_TTest/09b_paired_ttest.R` |
+| 10 | 10: chi-square | `Lab10_ChiSquare_Tests/10_chisquare_tests.R` |
+| 11 | 11: CRD/RBD/Latin | `Lab11_ANOVA_CRD/11_anova_crd.R`; `Lab12_ANOVA_RBD/12_anova_rbd.R`; `Lab13_Latin_Square/13_latin_square.R` |
+| 12 and supporting outputs | Consolidation | `Lab14_Consolidation/14_consolidation.R` |
 
 ### The 21 original predictors
 

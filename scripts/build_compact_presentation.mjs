@@ -110,15 +110,34 @@ for(let i=0;i<D.slides.length;i++){
    chart(s,'bar',d.binomial,27,301,384,231,{xAxis:{textStyle:{typeface:FONT,fontSize:17}},legend:{position:'bottom',textStyle:{typeface:FONT,fontSize:16}}});
    await pic(s,'normal',449,291,370,258);
    chart(s,'bar',d.poisson,853,301,390,231,{xAxis:{textStyle:{typeface:FONT,fontSize:15}},legend:{position:'bottom',textStyle:{typeface:FONT,fontSize:16}}});
-  }else if(d.kind==='tests'){
-   txt(s,'Six questions, six test results',42,161,814,34,25,true);
-   table(s,d.table,42,214,815,333,20,[340,181,197,97]);
-   txt(s,'Paired example: same 29 patients',887,161,350,57,24,true);
+  }else if(d.kind==='sample_tests'){
+   table(s,d.table,42,166,1196,211,22,[389,243,410,154]);
+   txt(s,'BMI: compare female and male means',42,394,578,33,23,true,BLUE);
+   txt(s,'Positive status: compare smoking groups',668,394,572,33,23,true,BLUE);
+   chart(s,'bar',d.bmi_sex,27,429,585,157,{hasLegend:false,
+    series:[{...d.bmi_sex.series[0],points:[{idx:0,fill:BLUE},{idx:1,fill:ORANGE}]}],
+    yAxis:{min:0,max:35,majorUnit:10,title:{text:'Mean BMI',textStyle:{typeface:FONT,fontSize:17}},textStyle:{typeface:FONT,fontSize:17},majorGridlines:{fill:'#DFE7EB',width:1}},
+    dataLabels:{showValue:true,position:'outEnd',numberFormatCode:'0.00',textStyle:{typeface:FONT,fontSize:21}}});
+   chart(s,'bar',d.smoking,654,429,585,157,{hasLegend:false,
+    series:[{...d.smoking.series[0],points:[{idx:0,fill:BLUE},{idx:1,fill:ORANGE}]}],
+    yAxis:{min:0,max:25,majorUnit:10,title:{text:'Positive status (%)',textStyle:{typeface:FONT,fontSize:17}},textStyle:{typeface:FONT,fontSize:17},majorGridlines:{fill:'#DFE7EB',width:1}},
+    dataLabels:{showValue:true,position:'outEnd',numberFormatCode:'0.0"%"',textStyle:{typeface:FONT,fontSize:21}}});
+   txt(s,d.bmi_caption,42,588,580,48,20);
+   txt(s,d.smoking_caption,668,588,572,48,20);
+  }else if(d.kind==='paired_tests'){
+   txt(s,'Independent: different respondents',42,166,579,33,24,true,BLUE);
+   txt(s,'Paired: the same 29 CBT patients',668,166,572,33,24,true,BLUE);
+   txt(s,'BRFSS: 1,667 females and 1,333 males.\nCompare physical poor-health days.',42,211,578,58,21);
+   txt(s,'MASS dataset: before/after weights (lb).\nBlue lines: patients. Orange line: mean.',668,211,572,58,21);
+   chart(s,'bar',d.physical_sex,27,278,585,204,{hasLegend:false,
+    series:[{...d.physical_sex.series[0],points:[{idx:0,fill:BLUE},{idx:1,fill:ORANGE}]}],
+    yAxis:{min:0,max:6,majorUnit:2,title:{text:'Mean physical poor-health days',textStyle:{typeface:FONT,fontSize:16}},textStyle:{typeface:FONT,fontSize:17},majorGridlines:{fill:'#DFE7EB',width:1}},
+    dataLabels:{showValue:true,position:'outEnd',numberFormatCode:'0.00',textStyle:{typeface:FONT,fontSize:21}}});
    const series=d.paired.series.map((v,k)=>({...v,line:{fill:k===29?ORANGE:'#A0C7D6',width:k===29?3:1},marker:{symbol:'none'}}));
-   chart(s,'line',d.paired,875,239,363,285,{series,hasLegend:false,
-    yAxis:{min:65,max:110,majorUnit:15,title:{text:'Weight (lb)',textStyle:{typeface:FONT,fontSize:16}},textStyle:{typeface:FONT,fontSize:16},majorGridlines:{fill:'#DFE7EB',width:1}}});
-   txt(s,'Mean gain: +3.01 lb\n95% CI: +0.23 to +5.79 lb',887,544,350,65,23,true,BLUE);
-   txt(s,'Reference values 27 and 11% are classroom assumptions.',42,576,811,47,21,false,MUTED);
+   chart(s,'line',d.paired,654,278,585,204,{series,hasLegend:false,
+    yAxis:{min:65,max:110,majorUnit:15,title:{text:'Weight (lb)',textStyle:{typeface:FONT,fontSize:17}},textStyle:{typeface:FONT,fontSize:17},majorGridlines:{fill:'#DFE7EB',width:1}}});
+   table(s,d.independent_table,42,498,576,132,20,[297,279]);
+   table(s,d.paired_table,668,498,572,132,20,[294,278]);
   }else if(d.kind==='review'){
    txt(s,'What we found',42,166,750,33,25,true,BLUE);
    d.findings.forEach((v,k)=>{
@@ -178,7 +197,7 @@ const receipt=path.join(ROOT,'.build/presentation/validation.json');
 for(const file of [FINAL,receipt]){
  try{await fs.rename(file,path.join(BUILD,`previous-${Date.now()}-${path.basename(file)}`));}catch(e){if(e.code!=='ENOENT')throw e;}
 }
-const tables=[2,3,4,5,6,7,9,10,11],charts=[2,5,8,9,10,11];
+const tables=[2,3,4,5,6,7,9,10,11,12],charts=[2,5,8,9,10,11,12];
 await finalizePresentation({workspaceDir:ROOT,candidatePath:candidate,finalPath:FINAL,
  pythonExecutable:path.join(RT,'python/python.exe'),
  integrityValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_package_integrity.py'),
@@ -187,11 +206,11 @@ await finalizePresentation({workspaceDir:ROOT,candidatePath:candidate,finalPath:
  explicitTotalSlideCount:D.slides.length,requestedContentSlideCount:D.requestedContentSlides,
  requiredNativeTableOwnerSlides:tables,requiredNativeChartOwnerSlides:charts,
  materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:[FONT]},verifyArtifactToolImport:true,receiptPath:receipt});
-console.log('Finalized: one intro and eleven content slides.');
+console.log('Finalized: one intro and twelve content slides.');
 const verified=await PresentationFile.importPptx(await FileBlob.load(FINAL));
 const previews=path.join(BUILD,'previews');await fs.mkdir(previews,{recursive:true});
 for(let i=0;i<D.slides.length;i++){
  const blob=await verified.export({slide:verified.slides.items[i],format:'png',scale:1.25});
  await fs.writeFile(path.join(previews,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await blob.arrayBuffer()));
 }
-console.log('Rendered all 12 slides for review.');
+console.log('Rendered all 13 slides for review.');
