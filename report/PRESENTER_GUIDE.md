@@ -2,7 +2,7 @@
 
 For theory from the beginning and detailed explanations of every slide, read [the complete project study guide](presentation_content.md) first. This shorter guide is for speaking practice after you understand the methods.
 
-Use the revised presentation (one intro plus ten content slides) for about 17–18 minutes, leaving time for questions. The PowerPoint notes contain the full explanations and source links. This guide supplies a simple speaking sequence and answers tied to the computed outputs.
+Use the revised presentation (one intro plus eleven content slides) for about 18–20 minutes, leaving time for questions. The PowerPoint notes contain the full explanations and source links. This guide supplies a simple speaking sequence and answers tied to the computed outputs.
 
 ## Suggested division
 
@@ -11,7 +11,7 @@ Use the revised presentation (one intro plus ten content slides) for about 17–
 | YASH RAJ | Intro and content 1–3 | 4 minutes | Aim, sources, preparation, outliers and removal |
 | HRISHIKESH DAMODAR NAYAK | Content 4–6 | 5 minutes | Summary, graphs, correlations, regression and diagnostics |
 | HARDIK LALLA | Content 7–8 | 4 minutes | Distributions, hypothesis tests, independent and paired examples |
-| ARYAN RAJ | Content 9–10 | 4–5 minutes | Findings and conclusion, then Experiments 10 and 11 |
+| ARYAN RAJ | Content 9–11 | 5–6 minutes | Lab 10 chi-square, Lab 11 experimental designs, then the conclusion |
 
 This is a suggested division, not a statement about who performed the original work. For a 15-minute slot, shorten graphical descriptions and show one important result per test. For 20 minutes, explain the assumption checks and design examples. Open the figure atlas for questions about diagnostic drawings.
 

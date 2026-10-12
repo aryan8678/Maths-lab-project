@@ -1,4 +1,4 @@
-"""Build ten content slides plus a cover from the verified lab outputs."""
+"""Build eleven content slides plus a cover from the verified lab outputs."""
 from pathlib import Path
 import csv,json
 ROOT=Path(__file__).resolve().parents[1]
@@ -124,13 +124,57 @@ slide('Chi-square and ANOVA','designs',
  rbd_table=[['Term','F','p'],['Block','5.86','0.007'],['Rate','2.17','0.113']],
  latin=grid,
  takeaway='CRD compares treatments. RBD controls one block factor. Latin Square controls rows and columns.')
-assert len(slides)==11
-assert slides[-1]['kind']=='designs'
+# Split the previous combined slide, then finish with the expanded review.
+combined=slides.pop()
+review=slides.pop()
+bp_rates=rows('Lab10_ChiSquare_Tests/output/HighBP_rates.csv')
+smoking_rates=rows('Lab10_ChiSquare_Tests/output/Smoker_rates.csv')
+slide('Chi-square: category patterns and relationships','chi',
+ 'Goodness of fit checks category counts. Independence tests check whether two categories are related.',
+ 'Course Experiment 10. Equal-frequency age GOF is a hypothetical teaching null across 13 unequal-width bands: chi-square 678.1247, df12, p<.001. Status means prediabetes or diabetes. Independence tests use Pearson chi-square without continuity correction: status×HighBP 226.2818, df1, p<.001, Cramer V .27464; status×Smoker 6.0746, df1, p .013714, V .0449985. Expected cells exceed five. No-high-BP positive share 118/1703=6.929%; high-BP 351/1297=27.062%. Never/ever100-cigarette shares 14.087% and17.361%. Compare association magnitudes, not p-values alone. These are observational relationships. Suggested time: 100 seconds.',
+ chi=combined['chi'],
+ highbp={'categories':['No high BP','High BP'],'series':[{'name':'Positive status (%)','values':[round(100*float(r['rate']),4) for r in bp_rates]}]},
+ smoking={'categories':['Never 100 cigarettes','Ever 100 cigarettes'],'series':[{'name':'Positive status (%)','values':[round(100*float(r['rate']),4) for r in smoking_rates]}]},
+ takeaway='Positive status is more closely related to high blood pressure than to ever-smoking in this sample.')
+slide('ANOVA and experimental designs','anova',
+ 'ANOVA compares means. CRD has no blocks. RBD controls one factor and Latin Square controls two.',
+ 'Course Experiment 11. BMI by education is observational ANOVA, F14.4064,p<.001,eta-square .02349. Unequal variances motivate Welch p .000351 and Holm separate-variance pair comparisons. Genuine Cochran potato CRD:32 plots,7 sulfur treatments,F3.6081,p .010262; control8 replicates,others4 each; Tukey control-minus-F12 difference16.875 percentage points,p .005965. Gomez rice complete-block design:24 plots,6 rates,4 blocks. Block F5.8622,p .007416; rate F2.1678,p .112809. Residual MSE decreases from200152 to110558,44.76%. Goulden wheat Latin Square:5 treatments in5 rows and5 columns. Row p .01328,column p .26343,treatment F21.0321,p .00002366; Cweeklydusting mean13.12 exceeds each other treatment with Tukey adjustment. Yield units unspecified for wheat, kg/ha for rice. Models are additive with negligible interaction assumed; genuine published designs are separate from survey data. Suggested time: 160 seconds.',
+ anova=combined['anova'],rbd=combined['rbd'],rbd_table=combined['rbd_table'],latin=combined['latin'],
+ takeaway='Blocks reduce unexplained error. Weekly dusting (C) has the highest wheat yield in its experiment.')
+review.update(
+ title='Conclusion: findings and next steps',
+ body='We described health patterns and applied every course method using documented data.',
+ notes='Final review of all course experiments. Mean BMI is higher in prediabetes/diabetes groups with overlapping individual distributions. Pearson r .102 and simple R-square1.03% show a weak association; the different multiple specification explains6.81%, not validated prediction accuracy. Removing114BMI flags changes mean28.40to27.65 and variance40.34to24.59. Binomial grouped fit is adequate to this test; normal and ordinary Poisson descriptions fail. BP status association V .275 exceeds smoking .045. Published paired/design supplements demonstrate the appropriate data structure. Rice blocks reduce residual MSE44.8%; weekly-dusting C has greatest wheat yield mean13.12 with significant adjusted pair comparisons. Limitations:historical,self-report,omitted complex survey design,sparse categories,confounding,model diagnostics and method-sensitive paired result. Next steps:more recent/better data, useful predictors, evaluation on unseen observations, repeat model checks. Explain findings as associations and course demonstrations. Suggested time: 100 seconds.',
+ findings=[
+ ['Higher average BMI in positive groups','27.72 without diabetes, 32.85 prediabetes, 31.98 diabetes.\nIndividual values still overlap.'],
+ ['Regression explains a small share','R²: 1.03% (simple), 6.81% (multiple).\nMost BMI variation remains unexplained.'],
+ ['Outliers and model checks matter','Removing 114 flags lowers mean BMI from 28.40 to 27.65.\nBinomial fits reasonably. Normal and Poisson fit poorly.'],
+ ['The design changes the comparison','BP has a larger status association than smoking.\nBlocks cut error by 44.8%. Wheat treatment C yields most.']],
+ limits=['2015, self-reported data.','Small groups add uncertainty.','Associations do not prove causes.','Low R² limits prediction.'],
+ next_steps=['Use newer, better measurements.','Add useful BMI predictors.','Evaluate on unseen data.','Repeat the model checks.'],
+ takeaway='All 11 labs are covered. The findings follow the data and their limitations.')
+slides.append(review)
+lab_headers={
+ 'cover':'LABS 1–11: Probability and Statistics Lab',
+ 'dataset':'LAB 1: Data types, import and export (dataset overview)',
+ 'preparation':'LAB 1: Data types, import and export',
+ 'outliers':'LAB 1 EXTENSION: Data preparation and outlier analysis',
+ 'summary':'LAB 2: Summary statistics and graphical representations',
+ 'correlation':'LAB 3: Correlation, simple linear regression and R²',
+ 'multiple':'LAB 4: Multiple linear regression',
+ 'distributions':'LAB 5: Binomial fitting     LAB 6: Normal and Poisson fitting',
+ 'tests':'LAB 7: One-sample tests     LAB 8: Two-sample tests     LAB 9: Independent and paired t-tests',
+ 'chi':'LAB 10: Chi-square goodness of fit and contingency tables',
+ 'anova':'LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square',
+ 'review':'LABS 1–11: Findings, limitations and next steps'}
+for item in slides:item['lab_header']=lab_headers[item['kind']]
+assert len(slides)==12
+assert slides[-3]['kind']=='chi' and slides[-2]['kind']=='anova' and slides[-1]['kind']=='review'
 import re
-for item, seconds in zip(slides, [20,75,60,90,90,100,100,100,120,60,180]):
+for item, seconds in zip(slides, [20,65,50,80,80,90,90,90,110,90,150,100]):
  item['notes']=re.sub(r'Suggested time:\s*\d+\s*seconds', f'Suggested time: {seconds} seconds', item['notes'])
 payload={'title':'Statistical analysis of diabetes and lifestyle indicators',
- 'authors':authors,'sources':sources,'slides':slides,'requestedContentSlides':10,
+ 'authors':authors,'sources':sources,'slides':slides,'requestedContentSlides':11,
  'tables':{'summary':summary,'before_after':before,'joint':joint,
            'tests':rows('report/consolidated_tests.csv'),
            'coefficients':rows('Lab04_Multiple_Regression/output/coefficients.csv')},
@@ -138,10 +182,10 @@ payload={'title':'Statistical analysis of diabetes and lifestyle indicators',
 (BUILD/'compact_content.json').write_text(json.dumps(payload,indent=2,ensure_ascii=False),encoding='utf-8')
 (BUILD/'content.json').write_text(json.dumps(payload,indent=2,ensure_ascii=False),encoding='utf-8')
 # Keep the manually maintained beginner study guide intact when rebuilding.
-(ROOT/'report/slide_content_and_notes.md').write_text('\n\n'.join(f"## {'Intro' if i==0 else str(i)}. {s['title']}\n\n{s['body']}\n\n{s.get('takeaway','')}\n\nSpeaker notes: {s['notes']}" for i,s in enumerate(slides)),encoding='utf-8')
+(ROOT/'report/slide_content_and_notes.md').write_text('\n\n'.join(f"## {'Intro' if i==0 else str(i)}. {s['title']}\n\n{s['lab_header']}\n\n{s['body']}\n\n{s.get('takeaway','')}\n\nSpeaker notes: {s['notes']}" for i,s in enumerate(slides)),encoding='utf-8')
 coverage='''# Coverage of the revised presentation
 
-The presentation has **one intro plus ten content slides**. Content slides are numbered 1–10; the cover is excluded. Experiments 10 and 11 appear only on content slide 10 (PowerPoint slide 11).
+The presentation has **one intro plus eleven content slides**. Content slides are numbered 1–11; the cover is excluded. Lab 10 has content slide 9, Lab 11 has content slide 10, and the expanded conclusion is content slide 11. Every slide identifies its syllabus exercise at the top.
 
 | Required topic | Content slide |
 |---|---|
@@ -153,11 +197,11 @@ The presentation has **one intro plus ten content slides**. Content slides are n
 | Multiple regression and model diagnostics | 6 |
 | Binomial, normal and Poisson models | 7 |
 | One-/two-sample, independent and paired tests | 8 |
-| Findings, limitations and conclusion | 9 |
-| Experiment 10: chi-square GOF and contingency | 10 only |
-| Experiment 11: one-way ANOVA, CRD, RBD, Latin Square | 10 only |
+| Experiment 10: chi-square GOF and contingency | 9 |
+| Experiment 11: one-way ANOVA, CRD, RBD, Latin Square | 10 |
+| Findings, limitations and next steps | 11 (final slide) |
 
-Rubric evidence: Collection of Data on 1–2; Analysis on 3–8 and 10; Review on 9 and the result explanations; Final Submission through the organized deck, references in notes, existing report and complete drawing atlas. All 29 original drawings remain attached in the atlas/ZIP. The main deck uses selected evidence to stay readable within the ten-slide limit.
+Rubric evidence: Collection of Data on 1–2; Analysis on 3–10; Review on 11 and the result explanations; Final Submission through the organized deck, references in notes, existing report and complete drawing atlas. All 29 original drawings remain attached in the atlas/ZIP. The previous combined final slide is split as requested, with the conclusion at the end.
 '''
 (ROOT/'report/PRESENTATION_COVERAGE.md').write_text(coverage,encoding='utf-8')
-print('Prepared 1 intro + 10 content slides; Experiments 10 and 11 are confined to the last slide.')
+print('Prepared 1 intro + 11 content slides; Lab 10 and Lab 11 are separate, followed by the conclusion.')

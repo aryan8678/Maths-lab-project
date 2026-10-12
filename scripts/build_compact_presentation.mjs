@@ -51,11 +51,13 @@ for(let i=0;i<D.slides.length;i++){
  const d=D.slides[i],s=P.slides.add();s.background.fill=WHITE;
  if(i===0){
   box(s,0,0,1280,18,BLUE);txt(s,'Diabetes and\nlifestyle indicators',58,83,1150,158,64,true);
+  txt(s,d.lab_header,62,34,1150,30,21,true,BLUE);
   txt(s,d.body,62,270,1100,90,31,false,BLUE);rule(s,62,387,1150);
   txt(s,D.authors.join('\n'),62,419,1150,176,27);
   txt(s,'Data  →  graphs  →  models  →  statistical tests',62,630,1140,46,29,true,BLUE);
  }else{
-  box(s,40,34,5,46,BLUE);txt(s,d.title,62,30,1178,58,40,true);
+  txt(s,d.lab_header,62,8,1178,26,18,true,BLUE);
+  box(s,40,40,5,46,BLUE);txt(s,d.title,62,36,1178,58,38,true);
   txt(s,d.body,42,102,1196,54,23,false,MUTED);
   if(d.kind==='dataset'){
    d.stats.forEach((v,k)=>metric(s,...v,42+k*402,161,375));rule(s,42,250);
@@ -118,36 +120,53 @@ for(let i=0;i<D.slides.length;i++){
    txt(s,'Mean gain: +3.01 lb\n95% CI: +0.23 to +5.79 lb',887,544,350,65,23,true,BLUE);
    txt(s,'Reference values 27 and 11% are classroom assumptions.',42,576,811,47,21,false,MUTED);
   }else if(d.kind==='review'){
-   const ys=[168,296,424];
+   txt(s,'What we found',42,166,750,33,25,true,BLUE);
    d.findings.forEach((v,k)=>{
-    const y=ys[k];txt(s,v[0],42,y,337,32,25,true);txt(s,v[1],403,y,821,47,35,true,BLUE);
-    txt(s,v[2],403,y+55,821,50,24);rule(s,42,y+113);
+    const y=209+k*101;txt(s,v[0],42,y,748,31,23,true);
+    txt(s,v[1],42,y+35,748,58,21);
+    if(k<3)rule(s,42,y+94,748);
    });
-   txt(s,'Limits to keep in mind',42,568,333,34,24,true);
-   txt(s,'Self-reported health  •  Small groups  •  Association does not prove a cause',403,568,822,65,23);
-  }else if(d.kind==='designs'){
-   txt(s,'10  Chi-square: test category patterns',42,167,571,33,25,true,BLUE);
-   txt(s,'11  ANOVA / CRD: compare group means',668,167,570,33,25,true,BLUE);
-   table(s,d.chi,42,215,570,159,20,[352,111,107]);table(s,d.anova,668,215,571,126,20,[361,105,105]);
-   txt(s,'BP has the stronger link: V = 0.275\nSmoking has a smaller link: V = 0.045',42,379,567,58,20);
-   txt(s,'CRD randomly assigns sulfur to plots.\nMean infection differs across treatments.',668,349,570,65,20);
-   rule(s,42,443);txt(s,'RBD: randomized blocks (rice)',42,460,570,32,25,true,BLUE);txt(s,'Latin Square: rows and columns',668,460,570,32,25,true,BLUE);
-   chart(s,'line',d.rbd,27,507,355,164,{xAxis:{textStyle:{typeface:FONT,fontSize:14}},
-    legend:{position:'right',textStyle:{typeface:FONT,fontSize:14}},
-    yAxis:{min:4000,max:6000,majorUnit:1000,textStyle:{typeface:FONT,fontSize:14},majorGridlines:{fill:'#DFE7EB',width:1}}});
-   table(s,d.rbd_table,402,507,210,111,18,[70,60,80]);
-   txt(s,'6 rates × 4 blocks\n44.8% lower error',404,632,208,45,18,true);
-   txt(s,'Rates do not differ significantly. X: seeding rate (kg/ha), Y: yield (kg/ha).',42,680,568,22,15,false,MUTED);
-   const grid=table(s,d.latin,669,508,272,163,20,undefined,false);
+   box(s,823,170,2,442,'#CCDCE4');
+   txt(s,'Limits',860,166,375,34,25,true,BLUE);
+   txt(s,d.limits.join('\n'),860,214,377,151,21);
+   txt(s,'Next steps',860,391,375,34,25,true,BLUE);
+   txt(s,d.next_steps.join('\n'),860,439,377,156,21);
+  }else if(d.kind==='chi'){
+   table(s,d.chi,42,176,1196,171,23,[828,184,184]);
+   txt(s,'Blood pressure: larger difference',42,370,574,34,24,true,BLUE);
+   txt(s,'Smoking: smaller difference',668,370,572,34,24,true,BLUE);
+   const settings={hasLegend:false,yAxis:{min:0,max:35,majorUnit:10,
+    title:{text:'Positive status (%)',textStyle:{typeface:FONT,fontSize:17}},
+    textStyle:{typeface:FONT,fontSize:17},majorGridlines:{fill:'#DFE7EB',width:1}},
+    dataLabels:{showValue:true,position:'outEnd',numberFormatCode:'0.0"%"',textStyle:{typeface:FONT,fontSize:21}}};
+   for(const [data,x] of [[d.highbp,27],[d.smoking,654]]){
+    chart(s,'bar',data,x,408,583,203,{...settings,
+     series:[{...data.series[0],points:[{idx:0,fill:BLUE},{idx:1,fill:ORANGE}]}]});
+   }
+   txt(s,'Association size: V = 0.275',42,611,573,29,21,true);
+   txt(s,'Association size: V = 0.045',668,611,572,29,21,true);
+  }else if(d.kind==='anova'){
+   table(s,d.anova,42,165,1196,120,23,[830,183,183]);
+   txt(s,'Education: existing survey groups.\nCRD: 32 randomized plots, 7 sulfur treatments.',42,299,593,60,21);
+   txt(s,'Both tests detect a difference between means.\nF does not identify every differing pair.',668,299,569,60,21);
+   rule(s,42,365);
+   txt(s,'RBD: one blocking factor (rice)',42,383,570,32,24,true,BLUE);
+   txt(s,'Latin Square: rows and columns',668,383,570,32,24,true,BLUE);
+   chart(s,'line',d.rbd,27,436,354,184,{xAxis:{textStyle:{typeface:FONT,fontSize:15}},
+    legend:{position:'right',textStyle:{typeface:FONT,fontSize:15}},
+    yAxis:{min:4000,max:6000,majorUnit:1000,textStyle:{typeface:FONT,fontSize:15},majorGridlines:{fill:'#DFE7EB',width:1}}});
+   table(s,d.rbd_table,402,438,213,110,19,[71,61,81]);
+   txt(s,'6 rates in each block.\n44.8% lower error.',402,574,213,55,19,true);
+   txt(s,'X: seeding rate (kg/ha). Y: yield (kg/ha). Rate p = 0.113.',42,615,573,22,16,false,MUTED);
+   const grid=table(s,d.latin,669,436,272,178,21,undefined,false);
    const fills={A:'#E4F0F5',B:'#D0E4ED',C:'#176D8C',D:'#B9D6E2',E:'#EFF5F8'};
-   for(let r=0;r<5;r++)for(let c=0;c<5;c++){const cell=grid.getCell(r,c);cell.fill=fills[d.latin[r][c]];cell.text.style={typeface:FONT,fontSize:20,bold:true,color:d.latin[r][c]==='C'?WHITE:INK,alignment:'center'};}
-   txt(s,'Wheat: 5 × 5 layout.\n5 treatments.\nOnce per row and column.',968,508,272,82,20);
-   txt(s,'F = 21.03 • p < 0.001\nC has highest mean yield.',968,606,272,59,20,true,BLUE);
+   for(let r=0;r<5;r++)for(let c=0;c<5;c++){const cell=grid.getCell(r,c);cell.fill=fills[d.latin[r][c]];cell.text.style={typeface:FONT,fontSize:21,bold:true,color:d.latin[r][c]==='C'?WHITE:INK,alignment:'center'};}
+   txt(s,'Wheat: 5 treatments in a 5 × 5 grid. Each letter occurs once per row and column.',968,436,271,95,21);
+   txt(s,'F = 21.03, p < 0.001',968,536,271,31,22,true,BLUE);
+   txt(s,'C: highest mean, 13.12.\nWeekly dusting.',968,578,271,58,21,true);
   }
-  if(d.kind!=='designs'){
-   box(s,42,646,1196,2,BLUE);txt(s,d.takeaway,42,658,1150,46,22,true,BLUE);
-  }
-  txt(s,`${i} / 10`,1192,691,69,22,14,false,MUTED);
+  box(s,42,646,1196,2,BLUE);txt(s,d.takeaway,42,658,1150,46,22,true,BLUE);
+  txt(s,`${i} / ${D.requestedContentSlides}`,1192,691,69,22,14,false,MUTED);
  }
  s.speakerNotes.textFrame.setText(d.notes+'\n\nSources:\n'+Object.values(D.sources).join('\n')+'\nCalculations: matching saved R lab outputs. All29 original figures remain in the complete atlas.');
  console.log(`Authored ${i===0?'intro':`content ${i}`}: ${d.title}`);
@@ -159,20 +178,20 @@ const receipt=path.join(ROOT,'.build/presentation/validation.json');
 for(const file of [FINAL,receipt]){
  try{await fs.rename(file,path.join(BUILD,`previous-${Date.now()}-${path.basename(file)}`));}catch(e){if(e.code!=='ENOENT')throw e;}
 }
-const tables=[2,3,4,5,6,7,9,11],charts=[2,5,8,9,11];
+const tables=[2,3,4,5,6,7,9,10,11],charts=[2,5,8,9,10,11];
 await finalizePresentation({workspaceDir:ROOT,candidatePath:candidate,finalPath:FINAL,
  pythonExecutable:path.join(RT,'python/python.exe'),
  integrityValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_package_integrity.py'),
  layoutValidatorPath:path.join(SKILL,'container_tools/inspect_presentation_layout_geometry.py'),
  layoutArgs:['--expected-slide-size-emu','12192000,6858000','--validate-heading-fit',...tables.flatMap(n=>['--require-native-table-slide',String(n)])],
- explicitTotalSlideCount:11,requestedContentSlideCount:10,
+ explicitTotalSlideCount:D.slides.length,requestedContentSlideCount:D.requestedContentSlides,
  requiredNativeTableOwnerSlides:tables,requiredNativeChartOwnerSlides:charts,
  materializeLiteralChartWorkbooks:true,fontPolicy:{basis:'design',families:[FONT]},verifyArtifactToolImport:true,receiptPath:receipt});
-console.log('Finalized: one intro and ten content slides.');
+console.log('Finalized: one intro and eleven content slides.');
 const verified=await PresentationFile.importPptx(await FileBlob.load(FINAL));
 const previews=path.join(BUILD,'previews');await fs.mkdir(previews,{recursive:true});
-for(let i=0;i<11;i++){
+for(let i=0;i<D.slides.length;i++){
  const blob=await verified.export({slide:verified.slides.items[i],format:'png',scale:1.25});
  await fs.writeFile(path.join(previews,`slide-${String(i+1).padStart(2,'0')}.png`),new Uint8Array(await blob.arrayBuffer()));
 }
-console.log('Rendered all 11 slides for review.');
+console.log('Rendered all 12 slides for review.');

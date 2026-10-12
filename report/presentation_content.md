@@ -6,7 +6,7 @@
 
 **Guide updated:** 12 October 2026
 
-This guide explains **the intro and all ten numbered content slides**, including the theory, actual calculations, reasons for choosing each method, and how to answer faculty questions. It is deliberately much longer than the presentation. The deck remains one intro plus ten content slides, with Experiments 10 and 11 only on the final content slide.
+This guide explains **the intro and all eleven numbered content slides**, including the theory, actual calculations, reasons for choosing each method, and how to answer faculty questions. It is deliberately much longer than the presentation. The deck has one intro plus eleven content slides. Lab 10 is content slide 9, Lab 11 is content slide 10, and the expanded conclusion is the final content slide 11. Each slide identifies the course exercise at the top.
 
 Project numbers come from the saved R outputs. Small invented numbers used to explain a formula are labelled **teaching example**. The [short slide text and speaker notes](slide_content_and_notes.md) are saved separately, so rebuilding the presentation will not overwrite this study guide.
 
@@ -26,8 +26,9 @@ Read the foundations first and then follow the slides in order. For every slide,
 - [Slide 6: multiple regression and model checks](#slide-6-multiple-regression-and-model-checks)
 - [Slide 7: fitting probability distributions](#slide-7-fitting-probability-distributions)
 - [Slide 8: hypothesis tests and paired measurements](#slide-8-hypothesis-tests-and-paired-measurements)
-- [Slide 9: findings and conclusion](#slide-9-findings-and-conclusion)
-- [Slide 10: chi-square, ANOVA and experimental designs](#slide-10-chi-square-anova-and-experimental-designs)
+- [Slide 9: chi-square category patterns and relationships](#slide-9-chi-square-category-patterns-and-relationships)
+- [Slide 10: ANOVA and experimental designs](#slide-10-anova-and-experimental-designs)
+- [Slide 11: findings and conclusion](#slide-11-findings-and-conclusion)
 - [R implementation and file map](#r-implementation-and-file-map)
 - [Every original drawing explained](#every-original-drawing-explained)
 - [Review questions and answer key](#review-questions-and-answer-key)
@@ -139,6 +140,8 @@ Our regression predicts **BMI**. Diabetes status is used in summaries and catego
 
 ## Slide 1: dataset and aim
 
+**Exercise header:** LAB 1: Data types, import and export (dataset overview)
+
 ### Question, source and suitability
 
 We want to describe health patterns, examine BMI relationships, compare groups and demonstrate the statistical methods taught in the course.
@@ -189,6 +192,8 @@ df <- full[sample.int(nrow(full), 3000), ]
 
 ## Slide 2: data preparation
 
+**Exercise header:** LAB 1: Data types, import and export
+
 ### What we check and why
 
 The sequence is **import → sample → validate → assign labels/types → export**. Preparation includes understanding the codes, not only deleting rows.
@@ -231,6 +236,8 @@ write.csv(df, "data/brfss_clean.csv", row.names = FALSE)
 **Faculty may ask:** “Why retain repeated rows?” Answer: “Identical recorded features are possible for different people. We had no evidence that they represented duplicate respondents.”
 
 ## Slide 3: outlier analysis and removal
+
+**Exercise header:** LAB 1 EXTENSION: Data preparation and outlier analysis
 
 ### What an outlier is
 
@@ -289,6 +296,8 @@ filtered <- df[!flag, ]
 **Faculty may ask:** “Why does the next slide still use mean 28.40?” Answer: “The full validated sample is our primary analysis; removal is demonstrated separately as a sensitivity comparison.”
 
 ## Slide 4: summary statistics and graphs
+
+**Exercise header:** LAB 2: Summary statistics and graphical representations
 
 ### Centre and spread
 
@@ -355,6 +364,8 @@ The shared `group_summary()` also calculates group-specific SD, variance and t-b
 **Faculty may ask:** “Why show SD as well as variance?” Answer: “Variance is squared spread; SD is its square root, so it is easier to interpret in the original units.”
 
 ## Slide 5: correlation and simple regression
+
+**Exercise header:** LAB 3: Correlation, simple linear regression and R²
 
 ### The question and the graph
 
@@ -449,6 +460,8 @@ In a formula, `Y ~ X` means model Y using X. `lm()` fits the line, `summary()` r
 **Faculty may ask:** “How can the p-value be small but the model weak?” Answer: “A large sample can detect a small association. The slope and R² measure its magnitude and explanatory strength.”
 
 ## Slide 6: multiple regression and model checks
+
+**Exercise header:** LAB 4: Multiple linear regression
 
 ### What changes from the simple model?
 
@@ -547,13 +560,15 @@ The model is appropriate as a course exercise with a numerical response and cate
 
 ## Slide 7: fitting probability distributions
 
+**Exercise header:** LAB 5: Binomial fitting; LAB 6: Normal and Poisson fitting
+
 ### What a distribution describes
 
 A probability distribution assigns probabilities to possible outcomes. For discrete counts, each possible whole number has a probability; these probabilities sum to 1. For a continuous measurement, a curve describes probability through area, and total area is 1.
 
 **Observed frequency** is what we counted. **Expected frequency** is what a proposed model predicts on average. Comparing them tells us whether the model is a reasonable description.
 
-This slide covers course Experiments 5 and 6. Its distribution-fit calculations use a goodness-of-fit procedure behind the scenes. The dedicated Experiment 10 discussion is still confined to slide 10 in the presentation; this learning guide explains the connections so you can answer questions.
+This slide covers course Experiments 5 and 6. Its distribution-fit calculations use a goodness-of-fit procedure behind the scenes. The dedicated Experiment 10 discussion has its own content slide 9 in the presentation; this learning guide explains the connections so you can answer questions.
 
 ### A. Binomial: positive statuses in groups of ten
 
@@ -672,6 +687,8 @@ Binomial is reasonably consistent with this grouped teaching example. Normal and
 **Faculty may ask:** “Does p = 0.962 prove a perfect binomial fit?” Answer: “No. It means this test finds no strong evidence against the fitted pattern in these bins under the assumptions.”
 
 ## Slide 8: hypothesis tests and paired measurements
+
+**Exercise header:** LAB 7: One-sample tests; LAB 8: Two-sample tests; LAB 9: Independent and paired t-tests
 
 ### Choosing the test from the question
 
@@ -810,62 +827,17 @@ Many tests across the project are course demonstrations. Testing many hypotheses
 
 **Faculty may ask:** “Why use another dataset for the paired test?” Answer: “The survey does not contain the required repeated measurements. The published CBT data provide real before/after pairs.”
 
-## Slide 9: findings and conclusion
+## Slide 9: chi-square category patterns and relationships
 
-### What a conclusion should do
+**Exercise header:** LAB 10: Chi-square goodness of fit and contingency tables
 
-A conclusion answers the aim using the evidence already shown. It should connect results, discuss their size and limitations, and avoid adding an unsupported claim just because it sounds impressive.
+This slide covers **Lab 10: chi-square goodness of fit and contingency tables**. It has its own full slide, followed by the separate Lab 11 design slide and the final conclusion.
 
-Our aim has two parts: understand health/BMI patterns and demonstrate the course methods. We do not need every test to be significant or every model to fit in order to meet that aim.
+### What this slide tests
 
-### Three main health findings
+**Chi-square** compares categorical counts with expected counts. We use it to check age-category frequencies and associations of combined-positive status with BP and smoking.
 
-**First, average BMI differs across health-status groups.** The means are 27.72 without diabetes, 32.85 for prediabetes and 31.98 for diabetes. Individual distributions overlap and the prediabetes group is small. Say “higher group averages”, not “BMI determines diabetes”.
-
-**Second, regression explanation is weak.** The simple specification explains 1.03% of BMI variation; the multiple specification explains 6.81%. The second fits more of this sample's variation, but most remains unexplained and neither is a validated diagnostic tool.
-
-**Third, extreme values affect summaries.** Removing BMI flags changes mean 28.40 to 27.65, variance 40.34 to 24.59 and correlation 0.102 to 0.056. The main relationship remains weak under both versions. Removal affects sample composition as well as spread.
-
-The distribution analysis adds an important methodological lesson: binomial fits the grouped example reasonably, while normal and Poisson descriptions are inadequate. The experimental supplements demonstrate correct designs rather than pretending the survey contains those designs.
-
-### Limitations with clear reasons
-
-| Limitation | Why it matters |
-|---|---|
-| Historical 2015 data | We cannot claim that results describe current health patterns |
-| Self-reported survey answers | Recall, rounding or reporting error may affect measurements |
-| Incomplete original survey weights/design in the derivative | Ordinary sample summaries/tests do not provide design-based national prevalence inference |
-| Observational health data | Confounding and reverse direction prevent a simple causal claim |
-| Sparse groups | Prediabetes n = 48 and no-school n = 2 give uncertain estimates |
-| Low model R² and imperfect diagnostics | Regression has limited explanatory/predictive usefulness |
-| Many exploratory/course tests | Small p-values should be interpreted with the question and testing family in mind |
-| Method-sensitive paired result | Different assumptions give different evidence in the small before/after sample |
-
-These are reasons to state the scope accurately, not reasons to hide the analysis. A good review explains what the data support and what they do not.
-
-### What future work would mean
-
-Useful next steps could include more recent data, survey-design information, better measured predictors, and evaluation on held-out observations. Depending on the new aim, a different response/model might be appropriate. We have not already carried out those steps and should describe them as future work.
-
-### How this addresses the rubric
-
-Collection is supported by a documented source and preparation. Analysis is supported by suitable calculations and graphs. Review is supported by connecting findings to the aim and discussing limitations. Final submission is supported by the organized presentation, report, references and attached drawings.
-
-Rubric coverage is evidence for evaluation, not a guarantee of a particular mark. Explain what we actually did rather than promising a score.
-
-**Say it simply:** “Our sample shows higher average BMI in the positive-status groups, but the fitted models explain little BMI variation. Extreme values affect the summaries, and the findings are associations within these data.”
-
-**Faculty may ask:** “What is your most important result?” Answer: “There are noticeable group patterns, but a statistically detectable association does not automatically make a strong explanatory or diagnostic model.”
-
-## Slide 10: chi-square, ANOVA and experimental designs
-
-This is the final content slide and is the only presentation slide devoted to **Experiment 10 and Experiment 11**. It contains several methods, so learn them as separate questions rather than trying to read every statistic as one analysis.
-
-### First distinguish the two families
-
-**Chi-square** compares categorical counts with expected counts. **ANOVA**, analysis of variance, tests equality of numerical response means across groups/treatments by comparing sources of variation.
-
-The key distinction is the response: category membership/counts versus a numerical measurement. “Both have p-values” is not a reason to interchange them.
+The two new bar charts show combined-positive percentages within the BP and smoking groups. They use the same y-axis scale, so the larger BP difference is easy to compare with the smaller smoking difference. The original stacked BP drawing is still in the atlas.
 
 ### A. Chi-square goodness of fit: age categories
 
@@ -915,7 +887,13 @@ Smoking p is 0.014 here versus 0.016 for the two-proportion test in slide 8 beca
 
 **Evidence:** [chi-square script](../Lab10_ChiSquare_Tests/10_chisquare_tests.R), [results](../Lab10_ChiSquare_Tests/output/tests.csv), [BP percentages](../Lab10_ChiSquare_Tests/output/HighBP_rates.csv).
 
-### C. ANOVA theory: why “analysis of variance” tests means
+## Slide 10: ANOVA and experimental designs
+
+**Exercise header:** LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square
+
+This slide covers **Lab 11: ANOVA in CRD, randomized blocks and Latin Square**. It compares numerical response means and explains how the design controls unwanted variation.
+
+### A. ANOVA theory: why “analysis of variance” tests means
 
 Suppose we compare average response across several groups. If their means differ considerably relative to variation within groups, that is evidence against equal population means.
 
@@ -934,7 +912,7 @@ Under equal means and suitable assumptions, numerator and denominator estimate a
 
 For k groups and N observations, group df = k − 1 and error df = N − k. Classical ANOVA assumes independent errors, comparable error variance and an appropriate normal-error approximation. It is the errors, not necessarily the pooled raw response, that need this interpretation.
 
-### D. Observational one-way ANOVA: BMI by education
+### B. Observational one-way ANOVA: BMI by education
 
 We compare BMI across six education groups using `aov(BMI ~ Education)`. H0 says the six mean BMIs are equal. The result is **F = 14.41, group df = 5, error df = 2994, p < 0.001**.
 
@@ -953,7 +931,7 @@ pairwise.t.test(df$BMI, df$Education,
 
 An overall F test does not identify which pairs differ. **Post-hoc comparisons** investigate those pairs. Repeated unadjusted tests inflate false-positive risk, so we use **Tukey** as the course exercise and **separate-variance pairwise t-tests with Holm adjustment** as an unequal-variance sensitivity analysis. Holm orders p-values and adjusts the testing thresholds across that family. We do not assume every education pair differs.
 
-### E. CRD: a genuine completely randomized design
+### C. CRD: a genuine completely randomized design
 
 In a **completely randomized design**, treatments are randomly assigned to experimental units without an explicit blocking factor in the analysis. A treatment is the intervention; an experimental unit is what receives it; replication means applying a treatment to multiple units.
 
@@ -972,7 +950,7 @@ The control mean is **22.625% infection**, compared with **5.75% for treatment F
 
 The CRD residual Shapiro p is **0.872** and spread-check p **0.116**. We do not detect strong violations with these checks, but nonsignificance in small groups is not proof of perfect assumptions.
 
-### F. RBD: account for one nuisance factor
+### D. RBD: account for one nuisance factor
 
 A **randomized block design** groups experimental units by a nuisance factor and randomizes treatments within blocks. A nuisance factor affects the response but is not the main treatment question. **Teaching example:** field sections with different fertility could be blocks, so each treatment is tested within every section rather than being confounded with its location.
 
@@ -1007,7 +985,7 @@ For b = 4 blocks and t = 6 treatments: block df = b − 1 = 3; treatment df = t 
 
 The graph has seeding rate on x and yield on y; each line represents one block. Different vertical patterns help visualize block variation. The additive model assumes no treatment-by-block interaction. With one observation per block/rate cell, interaction cannot be independently separated from pure error in this simple analysis.
 
-### G. Latin Square: account for two nuisance factors
+### E. Latin Square: account for two nuisance factors
 
 A **Latin Square design** arranges t treatments in a t×t grid so each treatment appears exactly once in each row and each column. It controls two nuisance directions rather than one. The letters identify treatments, not row or column names.
 
@@ -1063,6 +1041,59 @@ A nonsignificant column test does not require removing the column factor: it is 
 **Say it simply:** “Chi-square checks category patterns, while ANOVA compares numerical means. The separate experiments show how CRD, blocks and a Latin Square organize fair treatment comparisons and control unwanted variation.”
 
 **Faculty may ask:** “Why include agricultural data in a health project?” Answer: “The survey cannot demonstrate genuine randomized designs. We use clearly labelled published supplements to cover the required methods without inventing randomization.”
+
+## Slide 11: findings and conclusion
+
+**Exercise header:** LABS 1–11: Findings, limitations and next steps
+
+### What the final slide covers
+
+The conclusion now follows all statistical results. Its four finding rows cover health-status BMI, regression strength, outlier/model checks and experimental design. A separate column states limitations and next steps. It closes the presentation by connecting all eleven course exercises to the project aim.
+
+### What a conclusion should do
+
+A conclusion answers the aim using the evidence already shown. It should connect results, discuss their size and limitations, and avoid adding an unsupported claim just because it sounds impressive.
+
+Our aim has two parts: understand health/BMI patterns and demonstrate the course methods. We do not need every test to be significant or every model to fit in order to meet that aim.
+
+### Three main health findings
+
+**First, average BMI differs across health-status groups.** The means are 27.72 without diabetes, 32.85 for prediabetes and 31.98 for diabetes. Individual distributions overlap and the prediabetes group is small. Say “higher group averages”, not “BMI determines diabetes”.
+
+**Second, regression explanation is weak.** The simple specification explains 1.03% of BMI variation; the multiple specification explains 6.81%. The second fits more of this sample's variation, but most remains unexplained and neither is a validated diagnostic tool.
+
+**Third, extreme values affect summaries.** Removing BMI flags changes mean 28.40 to 27.65, variance 40.34 to 24.59 and correlation 0.102 to 0.056. The main relationship remains weak under both versions. Removal affects sample composition as well as spread.
+
+The distribution analysis adds an important methodological lesson: binomial fits the grouped example reasonably, while normal and Poisson descriptions are inadequate. The experimental supplements demonstrate correct designs rather than pretending the survey contains those designs.
+
+### Limitations with clear reasons
+
+| Limitation | Why it matters |
+|---|---|
+| Historical 2015 data | We cannot claim that results describe current health patterns |
+| Self-reported survey answers | Recall, rounding or reporting error may affect measurements |
+| Incomplete original survey weights/design in the derivative | Ordinary sample summaries/tests do not provide design-based national prevalence inference |
+| Observational health data | Confounding and reverse direction prevent a simple causal claim |
+| Sparse groups | Prediabetes n = 48 and no-school n = 2 give uncertain estimates |
+| Low model R² and imperfect diagnostics | Regression has limited explanatory/predictive usefulness |
+| Many exploratory/course tests | Small p-values should be interpreted with the question and testing family in mind |
+| Method-sensitive paired result | Different assumptions give different evidence in the small before/after sample |
+
+These are reasons to state the scope accurately, not reasons to hide the analysis. A good review explains what the data support and what they do not.
+
+### What future work would mean
+
+Useful next steps could include more recent data, survey-design information, better measured predictors, and evaluation on held-out observations. Depending on the new aim, a different response/model might be appropriate. We have not already carried out those steps and should describe them as future work.
+
+### How this addresses the rubric
+
+Collection is supported by a documented source and preparation. Analysis is supported by suitable calculations and graphs. Review is supported by connecting findings to the aim and discussing limitations. Final submission is supported by the organized presentation, report, references and attached drawings.
+
+Rubric coverage is evidence for evaluation, not a guarantee of a particular mark. Explain what we actually did rather than promising a score.
+
+**Say it simply:** “Our sample shows higher average BMI in the positive-status groups, but the fitted models explain little BMI variation. Extreme values affect the summaries, and the findings are associations within these data.”
+
+**Faculty may ask:** “What is your most important result?” Answer: “There are noticeable group patterns, but a statistically detectable association does not automatically make a strong explanatory or diagnostic model.”
 
 ## R implementation and file map
 
@@ -1125,9 +1156,9 @@ There are **11 syllabus experiments and 17 executed scripts**. Some experiments 
 | 7 | 5: binomial; 6: normal/Poisson | `Lab05_Binomial_Fitting/05_binomial_fitting.R`; `Lab06_Normal_Poisson_Fitting/06_normal_poisson_fitting.R` |
 | 8 | 7: one sample; 8: two samples | `Lab07_OneSample_Tests/07_onesample_tests.R`; `Lab08_TwoSample_Tests/08_twosample_tests.R` |
 | 8 | 9: independent/dependent t-tests | `Lab09_Paired_TTest/09_independent_ttest.R`; `Lab09_Paired_TTest/09b_paired_ttest.R` |
-| 10 | 10: chi-square | `Lab10_ChiSquare_Tests/10_chisquare_tests.R` |
+| 9 | 10: chi-square | `Lab10_ChiSquare_Tests/10_chisquare_tests.R` |
 | 10 | 11: CRD/RBD/Latin | `Lab11_ANOVA_CRD/11_anova_crd.R`; `Lab12_ANOVA_RBD/12_anova_rbd.R`; `Lab13_Latin_Square/13_latin_square.R` |
-| 9 and supporting outputs | Consolidation | `Lab14_Consolidation/14_consolidation.R` |
+| 11 and supporting outputs | Consolidation | `Lab14_Consolidation/14_consolidation.R` |
 
 ### The 21 original predictors
 
@@ -1301,7 +1332,7 @@ Use this five-sentence pattern: “We asked ___. The observations are ___ and th
 
 If asked about an assumption, explain why it matters and what we actually checked. If you do not know a number, identify the relevant saved output instead of guessing. If asked about future work, distinguish it from methods already implemented.
 
-You are ready when you can explain each graph's axes, define its method without reading the slide, state the result's direction and size, and name one real limitation. Rehearse the final multi-method slide separately because its designs are easy to mix up.
+You are ready when you can explain each graph's axes, define its method without reading the slide, state the result's direction and size, and name one real limitation. Rehearse the Lab 11 design slide separately because its designs are easy to mix up, then practise the final conclusion.
 
 ## References and evidence
 

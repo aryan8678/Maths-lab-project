@@ -6,7 +6,7 @@ The completed project covers all 11 experiments in the supplied BMAT202P syllabu
 
 ## Submission files
 
-- [One intro + 10 content slides, with speaker notes](submission/Diabetes_Statistics_Presentation.pptx)
+- [One intro + 11 content slides, with speaker notes](submission/Diabetes_Statistics_Presentation.pptx)
 - [Presentation PDF](submission/Diabetes_Statistics_Slides.pdf)
 - [18-page mini project report, Word](submission/Diabetes_Statistics_Report.docx)
 - [Report PDF](submission/Diabetes_Statistics_Report.pdf)
@@ -16,7 +16,7 @@ The completed project covers all 11 experiments in the supplied BMAT202P syllabu
 - [Rehearsal and viva guide](report/PRESENTER_GUIDE.md)
 - [Complete beginner study guide for every slide](report/presentation_content.md)
 
-The presentation has one intro plus ten numbered content slides and is designed for 15–20 minutes. Experiments 10 and 11 appear only on the final content slide. Its notes contain explanations, sources and timing suggestions. Tables and the dataset comparison chart are editable PowerPoint objects. Original R figures are embedded and supplied separately.
+The presentation has one intro plus eleven numbered content slides and is designed for 15–20 minutes. Lab 10 and Lab 11 have separate slides, followed by the expanded conclusion. Each slide names its syllabus exercise at the top. Its notes contain explanations, sources and timing suggestions. Tables and the dataset comparison chart are editable PowerPoint objects. Original R figures are embedded and supplied separately.
 
 For faculty-review preparation, start with [the complete study guide](report/presentation_content.md). It teaches the statistical foundations, explains all slides and all 29 drawings, works through the actual results, maps them to the R implementation, and includes 48 practice questions with answers. The generated [short slide text and notes](report/slide_content_and_notes.md) are separate, so rebuilding the deck preserves the study guide.
 
