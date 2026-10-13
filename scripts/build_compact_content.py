@@ -158,11 +158,21 @@ slide('Chi-square: category patterns and relationships','chi',
  highbp={'categories':['No high BP','High BP'],'series':[{'name':'Positive status (%)','values':[round(100*float(r['rate']),4) for r in bp_rates]}]},
  smoking={'categories':['Never 100 cigarettes','Ever 100 cigarettes'],'series':[{'name':'Positive status (%)','values':[round(100*float(r['rate']),4) for r in smoking_rates]}]},
  takeaway='Positive status is more closely related to high blood pressure than to ever-smoking in this sample.')
-slide('ANOVA and experimental designs','anova',
- 'ANOVA compares means. CRD has no blocks. RBD controls one factor and Latin Square controls two.',
- 'Course Experiment 11. BMI by education is observational ANOVA, F14.4064,p<.001,eta-square .02349. Unequal variances motivate Welch p .000351 and Holm separate-variance pair comparisons. Genuine Cochran potato CRD:32 plots,7 sulfur treatments,F3.6081,p .010262; control8 replicates,others4 each; Tukey control-minus-F12 difference16.875 percentage points,p .005965. Gomez rice complete-block design:24 plots,6 rates,4 blocks. Block F5.8622,p .007416; rate F2.1678,p .112809. Residual MSE decreases from200152 to110558,44.76%. Goulden wheat Latin Square:5 treatments in5 rows and5 columns. Row p .01328,column p .26343,treatment F21.0321,p .00002366; Cweeklydusting mean13.12 exceeds each other treatment with Tukey adjustment. Yield units unspecified for wheat, kg/ha for rice. Models are additive with negligible interaction assumed; genuine published designs are separate from survey data. Suggested time: 160 seconds.',
- anova=combined['anova'],rbd=combined['rbd'],rbd_table=combined['rbd_table'],latin=combined['latin'],
- takeaway='Blocks reduce unexplained error. Weekly dusting (C) has the highest wheat yield in its experiment.')
+education_groups=rows('Lab11_ANOVA_CRD/output/project_education_groups.csv')
+project_models=rows('Lab11_ANOVA_CRD/output/project_anova_models.csv')
+project_checks=rows('Lab11_ANOVA_CRD/output/project_anova_checks.csv')
+design_tests=rows('Lab11_ANOVA_CRD/output/survey_design_tests.csv')
+survey_rbd=rows('Lab11_ANOVA_CRD/output/survey_rbd_means.csv')
+survey_latin=rows('Lab11_ANOVA_CRD/output/survey_latin_records.csv')
+age_blocks=['18-39','40-54','55-69','70+']
+edu_layout=['Some high school','High school','Some college','College graduate']
+slide('CRD, RBD and Latin Square using health records','anova',
+ 'BMI is the response. Education is the group factor. Age and income form blocks in matched subsets.',
+ 'Course Experiment 11 using only observed BRFSS data. CRD-form one-way BMI~Education uses all3000 records and6education groups: F14.4064,df5,2994,p<.001. Education was observed, not randomly assigned. RBD-structure subset uses4age blocks (18-39,40-54,55-69,70+) and4education groups (Some high school,High school,Some college,College graduate),10actualrespondents per age×education cell,n160. Seed10111 selects within eligible cells without examining BMI. Model BMI~age_block+Education, education partial F3.13766,df3,153,p .027183. Latin matched layout uses4age rows and4income columns (<20k,20-35k,35-75k,75k+). Cyclic letters A/B/C/D represent those4education groups, each once in each row/column. Seed10112 selects one actual respondent per required age×income×education cell, n16, no duplicates. Model BMI~age_block+income_block+Education, education F3.28448,df3,6,p .100227. The small Latin example does not reject equal adjusted education means at .05. No BMI values are fabricated; matching/selection uses category membership, not the outcome. Balanced layouts are retrospective illustrations, not randomized experiments or causal estimates. Full-sample Welch ANOVA p .000351; separate-variance Holm comparisons graduate-minus-high-school−2.3097BMI and graduate-minus-some-college−1.4903BMI bothp<.001. These checks concern the full-sample comparison, not the matched subsets. Source-row ledgers and balance checks are saved. Suggested time:145 seconds.',
+ anova=[['Analysis of education groups','Rows','F','p']]+[[label,r['n'],f(r['F']),p(r['p'])] for r,label in zip(design_tests,['CRD-form: one-way ANOVA','RBD layout: account for age','Latin Square layout: age + income'])],
+ rbd={'categories':age_blocks,'series':[{'name':label,'values':[float(next(r['BMI'] for r in survey_rbd if r['age_block']==age and r['Education']==edu)) for age in age_blocks]} for edu,label in zip(edu_layout,['Some HS','High school','Some college','Graduate'])]},
+ latin=[[next(r['letter'] for r in survey_latin if int(r['layout_row'])==y and int(r['layout_col'])==x) for x in range(1,5)] for y in range(1,5)],
+ takeaway='All records come from BRFSS. Observational layouts: education was not randomly assigned.')
 review.update(
  title='Conclusion: findings and next steps',
  body='We described health patterns and applied every course method using documented data.',
@@ -188,7 +198,7 @@ lab_headers={
  'sample_tests':'LAB 7: One-sample mean/proportion tests     LAB 8: Two-sample mean/proportion tests',
  'paired_tests':'LAB 9: Independent and dependent (paired) t-tests',
  'chi':'LAB 10: Chi-square goodness of fit and contingency tables',
- 'anova':'LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square',
+ 'anova':'LAB 11: CRD, RBD and Latin Square analysis (observational illustrations)',
  'review':'LABS 1–11: Findings, limitations and next steps'}
 for item in slides:item['lab_header']=lab_headers[item['kind']]
 assert len(slides)==13
@@ -222,10 +232,12 @@ The presentation has **one intro plus twelve content slides**. Content slides ar
 | Experiments 7–8: one-/two-sample mean and proportion tests | 8 |
 | Experiment 9: independent and paired t-tests | 9 |
 | Experiment 10: chi-square GOF and contingency | 10 |
-| Experiment 11: one-way ANOVA, CRD, RBD, Latin Square | 11 |
+| Experiment 11: CRD-form ANOVA, balanced blocked and Latin layouts using actual BRFSS records | 11 |
 | Findings, limitations and next steps | 12 (final slide) |
 
 Rubric evidence: Collection of Data on 1–2; Analysis on 3–11; Review on 12 and the result explanations; Final Submission through the organized deck, references in notes, existing report and complete drawing atlas. All 29 original drawings remain attached in the atlas/ZIP. Labs 7–8 and Lab 9 have separate content-rich slides. Lab 10/11 remain separate, with the conclusion at the end.
+
+Slide 11 uses only the health survey. CRD-form one-way ANOVA uses 3,000 rows. A 160-row subset has four age blocks and four education groups, ten respondents per cell. A 16-row matched subset has a balanced 4×4 Latin layout with age rows and income columns. Education was observed, not randomized; these are design-layout demonstrations rather than causal experiments. Source-row records and balance checks are saved. Published agricultural examples remain in the report/repository but are omitted from this slide.
 '''
 (ROOT/'report/PRESENTATION_COVERAGE.md').write_text(coverage,encoding='utf-8')
 print('Prepared 1 intro + 12 content slides; Labs 7–8 and Lab 9 have separate result slides.')

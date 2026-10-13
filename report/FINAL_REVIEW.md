@@ -53,3 +53,8 @@ The analysis stays close to base R and the prescribed statistical exercises. Sen
 ## Files to submit
 
 Use `submission/Diabetes_Statistics_Presentation.pptx` and `submission/Diabetes_Statistics_Report.pdf` as the main files. The editable Word report, slide PDF, figure atlas and original drawings are included. Names and registration numbers match the four supplied students. Faculty/class details were not supplied and have not been invented.
+
+
+## Project-only second-last slide revision, 13 October 2026
+
+Only the second-last presentation slide changed. Its CRD-form test uses the primary health sample; its RBD and Latin layouts use verified, balanced subsets of real BRFSS respondents. Education is observed, so randomized causal design claims are explicitly excluded. The additional 11b/11c scripts and source-row ledgers reproduce this slide. The original 17-script execution record and agricultural examples remain historical/report evidence; other presentation slides are unchanged as requested.

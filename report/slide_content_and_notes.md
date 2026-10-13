@@ -109,15 +109,15 @@ Positive status is more closely related to high blood pressure than to ever-smok
 
 Speaker notes: Course Experiment 10. Equal-frequency age GOF is a hypothetical teaching null across 13 unequal-width bands: chi-square 678.1247, df12, p<.001. Status means prediabetes or diabetes. Independence tests use Pearson chi-square without continuity correction: status×HighBP 226.2818, df1, p<.001, Cramer V .27464; status×Smoker 6.0746, df1, p .013714, V .0449985. Expected cells exceed five. No-high-BP positive share 118/1703=6.929%; high-BP 351/1297=27.062%. Never/ever100-cigarette shares 14.087% and17.361%. Compare association magnitudes, not p-values alone. These are observational relationships. Suggested time: 85 seconds.
 
-## 11. ANOVA and experimental designs
+## 11. CRD, RBD and Latin Square using health records
 
-LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square
+LAB 11: CRD, RBD and Latin Square analysis (observational illustrations)
 
-ANOVA compares means. CRD has no blocks. RBD controls one factor and Latin Square controls two.
+BMI is the response. Education is the group factor. Age and income form blocks in matched subsets.
 
-Blocks reduce unexplained error. Weekly dusting (C) has the highest wheat yield in its experiment.
+All records come from BRFSS. Observational layouts: education was not randomly assigned.
 
-Speaker notes: Course Experiment 11. BMI by education is observational ANOVA, F14.4064,p<.001,eta-square .02349. Unequal variances motivate Welch p .000351 and Holm separate-variance pair comparisons. Genuine Cochran potato CRD:32 plots,7 sulfur treatments,F3.6081,p .010262; control8 replicates,others4 each; Tukey control-minus-F12 difference16.875 percentage points,p .005965. Gomez rice complete-block design:24 plots,6 rates,4 blocks. Block F5.8622,p .007416; rate F2.1678,p .112809. Residual MSE decreases from200152 to110558,44.76%. Goulden wheat Latin Square:5 treatments in5 rows and5 columns. Row p .01328,column p .26343,treatment F21.0321,p .00002366; Cweeklydusting mean13.12 exceeds each other treatment with Tukey adjustment. Yield units unspecified for wheat, kg/ha for rice. Models are additive with negligible interaction assumed; genuine published designs are separate from survey data. Suggested time: 145 seconds.
+Speaker notes: Course Experiment 11 using only observed BRFSS data. CRD-form one-way BMI~Education uses all3000 records and6education groups: F14.4064,df5,2994,p<.001. Education was observed, not randomly assigned. RBD-structure subset uses4age blocks (18-39,40-54,55-69,70+) and4education groups (Some high school,High school,Some college,College graduate),10actualrespondents per age×education cell,n160. Seed10111 selects within eligible cells without examining BMI. Model BMI~age_block+Education, education partial F3.13766,df3,153,p .027183. Latin matched layout uses4age rows and4income columns (<20k,20-35k,35-75k,75k+). Cyclic letters A/B/C/D represent those4education groups, each once in each row/column. Seed10112 selects one actual respondent per required age×income×education cell, n16, no duplicates. Model BMI~age_block+income_block+Education, education F3.28448,df3,6,p .100227. The small Latin example does not reject equal adjusted education means at .05. No BMI values are fabricated; matching/selection uses category membership, not the outcome. Balanced layouts are retrospective illustrations, not randomized experiments or causal estimates. Full-sample Welch ANOVA p .000351; separate-variance Holm comparisons graduate-minus-high-school−2.3097BMI and graduate-minus-some-college−1.4903BMI bothp<.001. These checks concern the full-sample comparison, not the matched subsets. Source-row ledgers and balance checks are saved. Suggested time: 145 seconds.
 
 ## 12. Conclusion: findings and next steps
 

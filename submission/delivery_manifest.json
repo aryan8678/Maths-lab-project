@@ -5,6 +5,11 @@
   "experiments_7_8_9": "Labs 7\u20138 on content slide 8; Lab 9 on content slide 9",
   "experiments_10_11": "separate content slides 10 and 11; conclusion on final content slide 12",
   "lab_labels": "Every slide identifies its syllabus exercise at the top",
+  "lab_11_scope": "BRFSS-only CRD-form ANOVA (n3000), balanced age-block layout (n160), matched 4x4 Latin layout (n16); observational, not randomized treatments",
+  "additional_lab11_scripts": [
+    "Lab11_ANOVA_CRD/11b_project_anova.R",
+    "Lab11_ANOVA_CRD/11c_survey_design_layouts.R"
+  ],
   "report_pages": 18,
   "drawings": 29,
   "completed_scripts": 17,
@@ -14,11 +19,11 @@
   "study_guide": {
     "path": "report/presentation_content.md",
     "scope": "Intro and all twelve content slides; foundations, 29 drawings, R implementation, 48 review questions",
-    "sha256": "d5c11af49a042f039ea11b2e4c7a3ad045e99ebbfa54a5e07c7bb8ba9a6149c0"
+    "sha256": "58fedb2072bddce6be70c09c169ddfe6dffca676223aad7f57a9e56697e7c85a"
   },
   "sha256": {
-    "Diabetes_Statistics_Presentation.pptx": "109f62969152c8291c146a1e17532e051540b653ed43cdb3430716a7f253d251",
-    "Diabetes_Statistics_Slides.pdf": "1f324bc268acba3993a536bd47b1a683e6f7d092be2f19a86a9cb0800596a0ab",
+    "Diabetes_Statistics_Presentation.pptx": "d70a748047dbae9a99f78dd099de13c0e3606abcc07c03c43611a586fec2e5e2",
+    "Diabetes_Statistics_Slides.pdf": "280eba1c33d64fbe422f1352e83b6bad9a9e8300d7dfd21a2f3149ae29ab7887",
     "Diabetes_Statistics_Report.docx": "25a46973b230823defb845898eae457910eaac88e64755ef6ceec8531d864556",
     "Diabetes_Statistics_Report.pdf": "20012fd3a619bc1086f1f14e9498ea21c06d1f8c845ff3cbcb07a67615248567",
     "Complete_Figure_Atlas.pdf": "d51664b8a788ee830e37af98e6f6843796f23056139c224bfed60c17cb4b20e1",

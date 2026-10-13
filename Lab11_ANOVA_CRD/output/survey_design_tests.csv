@@ -1,0 +1,4 @@
+"model","n","education_df","residual_df","F","p","r_squared"
+"CRD-form: all survey education groups",3000,5,2994,14.4064462915677,5.72409567748266e-14,0.0234936315146263
+"RBD layout: age blocks",160,3,153,3.13766153307065,0.027183042195871,0.0828535480915853
+"Latin layout: age and income blocks",16,3,6,3.28448275862069,0.100226753837905,0.741071428571428

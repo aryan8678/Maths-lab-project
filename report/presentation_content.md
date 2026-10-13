@@ -28,7 +28,7 @@ Read the foundations first and then follow the slides in order. For every slide,
 - [Slide 8: one- and two-sample hypothesis tests](#slide-8-one--and-two-sample-hypothesis-tests)
 - [Slide 9: independent and paired t-tests](#slide-9-independent-and-paired-t-tests)
 - [Slide 10: chi-square category patterns and relationships](#slide-10-chi-square-category-patterns-and-relationships)
-- [Slide 11: ANOVA and experimental designs](#slide-11-anova-and-experimental-designs)
+- [Slide 11: CRD, RBD and Latin Square using health records](#slide-11-crd-rbd-and-latin-square-using-health-records)
 - [Slide 12: findings and conclusion](#slide-12-findings-and-conclusion)
 - [R implementation and file map](#r-implementation-and-file-map)
 - [Every original drawing explained](#every-original-drawing-explained)
@@ -907,160 +907,121 @@ Smoking p is 0.014 here versus 0.016 for the two-proportion test in slide 8 beca
 
 **Evidence:** [chi-square script](../Lab10_ChiSquare_Tests/10_chisquare_tests.R), [results](../Lab10_ChiSquare_Tests/output/tests.csv), [BP percentages](../Lab10_ChiSquare_Tests/output/HighBP_rates.csv).
 
-## Slide 11: ANOVA and experimental designs
+## Slide 11: CRD, RBD and Latin Square using health records
 
-**Exercise header:** LAB 11: ANOVA in completely randomized designs, randomized blocks and Latin Square
+**Exercise header:** LAB 11: CRD, RBD and Latin Square analysis (observational illustrations)
 
-This slide covers **Lab 11: ANOVA in CRD, randomized blocks and Latin Square**. It compares numerical response means and explains how the design controls unwanted variation.
+The current second-last slide uses **only actual BRFSS records**. Potato, rice and wheat examples have been removed from this slide. The response is BMI; education supplies the comparison groups. Age and income supply observed blocking categories for the balanced illustrations.
 
-### A. ANOVA theory: why “analysis of variance” tests means
+### The distinction you must explain accurately
 
-Suppose we compare average response across several groups. If their means differ considerably relative to variation within groups, that is evidence against equal population means.
+A randomized experiment assigns treatments to units. Our survey observes people's existing education, age and income. Selecting respondents randomly within a category does not randomly assign their education. Therefore, these are **observational design-layout illustrations**, not new randomized experiments or causal tests.
 
-For one-way ANOVA, the model is `response = grand mean + group effect + error`. H0 says every group mean is equal. H1 says at least one differs; it does not say all pairs differ.
+The examples demonstrate the one-way, blocked and row/column-adjusted ANOVA calculations and layout balance required by Lab 11. They cannot retrospectively turn a survey into a genuinely randomized CRD, RBD or Latin Square experiment. The footer makes this distinction explicit.
 
-The total squared variation is divided into:
+### A. Why ANOVA tests means by comparing variation
 
-- **Between-group sum of squares:** `sum(group n × (group mean − overall mean)²)`.
-- **Within-group/error sum of squares:** `sum((observation − its group mean)²)`.
+H0 says the education-group mean BMIs are equal under the stated model. The alternative says at least one differs. ANOVA compares variation attributed to group differences with residual variation left after fitting the model:
 
-Divide each sum of squares by its df to obtain a **mean square (MS)**. Then:
+`F = group mean square / residual mean square`
 
-`F = mean square for groups / mean square for error`
+Sum of squares divided by its degrees of freedom gives a mean square. Large F provides evidence against equal means under appropriate independent-error assumptions. An overall F test does not identify every differing pair. Post-hoc comparisons need appropriate multiplicity adjustment.
 
-Under equal means and suitable assumptions, numerator and denominator estimate a common noise variance. A large F indicates more group variation than noise alone would explain. F is a ratio, not a difference in BMI or yield units.
+### B. CRD-form: one-way education comparison
 
-For k groups and N observations, group df = k − 1 and error df = N − k. Classical ANOVA assumes independent errors, comparable error variance and an appropriate normal-error approximation. It is the errors, not necessarily the pooled raw response, that need this interpretation.
-
-### B. Observational one-way ANOVA: BMI by education
-
-We compare BMI across six education groups using `aov(BMI ~ Education)`. H0 says the six mean BMIs are equal. The result is **F = 14.41, group df = 5, error df = 2994, p < 0.001**.
-
-We have evidence that at least one mean differs. Education explains about **2.35% of total BMI variation** in this one-factor comparison, measured by `eta² = group sum of squares / total sum of squares`. A significant F therefore coexists with a small explained fraction.
-
-People were not randomly assigned education. This is an **observational ANOVA**, not a completely randomized education experiment. We cannot conclude that changing education would cause the observed BMI difference.
-
-The **Fligner–Killeen variance check** uses ranks to assess whether group spreads are comparable. Here p ≈ **0.00013**, questioning equal variances. The project also runs **Welch one-way ANOVA**, which relaxes the equal-variance requirement, with **p = 0.000351**. Both provide evidence of a mean difference, but the unequal spreads and tiny no-school group still matter.
+The full 3,000-row prepared sample contains six education categories. We fit:
 
 ```r
-aov(BMI ~ Education, data = df)
-oneway.test(BMI ~ Education, data = df)
-pairwise.t.test(df$BMI, df$Education,
-                pool.sd = FALSE, p.adjust.method = "holm")
+lm(BMI ~ Education, data = df)
 ```
 
-An overall F test does not identify which pairs differ. **Post-hoc comparisons** investigate those pairs. Repeated unadjusted tests inflate false-positive risk, so we use **Tukey** as the course exercise and **separate-variance pairwise t-tests with Holm adjustment** as an unequal-variance sensitivity analysis. Holm orders p-values and adjusts the testing thresholds across that family. We do not assume every education pair differs.
+This is the same one-factor analysis formula used in a CRD. Here the groups are observed, not randomly assigned treatments. Education uses 5 df; residuals use 3,000 − 6 = 2,994 df. **F = 14.41, p < 0.001** provides evidence of at least one education-group mean difference.
 
-### C. CRD: a genuine completely randomized design
+The group sizes are unequal and the no-school group has only two respondents. We do not call this a balanced experimental allocation. The full-sample spread check has p = 0.000130, so equal variances are questionable. Welch one-way ANOVA allows unequal group variances and also finds evidence of a difference: **p = 0.000351**.
 
-In a **completely randomized design**, treatments are randomly assigned to experimental units without an explicit blocking factor in the analysis. A treatment is the intervention; an experimental unit is what receives it; replication means applying a treatment to multiple units.
+Separate-variance pairwise t-tests with Holm adjustment show graduate-minus-high-school mean difference **−2.31 BMI units** and graduate-minus-some-college **−1.49 BMI units**, both adjusted p < 0.001. These are differences between existing groups; changing a person's education is not proven to produce those BMI changes.
 
-We use the published **Cochran potato sulfur experiment**. It has **32 plots and seven treatments**, with eight control plots and four replicates for each of six sulfur treatments. The response is percentage of potato surface affected by scab, so **lower infection is better**. The [source documentation](https://kwstat.github.io/agridat/reference/cochran.crd.html) identifies this as a CRD, including spring/fall sulfur applications.
+### C. RBD structure: four age blocks and four education groups
 
-Our team analyzes the published design; we did not conduct its random allocation. Having row/column positions in the source does not by itself make the stated CRD a blocked analysis.
+To demonstrate a balanced blocked layout, we use four common education categories:
+
+| Letter | Observed education category |
+|---|---|
+| A | Some high school |
+| B | High school |
+| C | Some college |
+| D | College graduate |
+
+The two rarest categories are omitted from these layout illustrations because they cannot supply the same per-cell count. The full-sample one-way test above still includes all six categories.
+
+The four age blocks are **18–39, 40–54, 55–69 and 70+**. Each combines whole existing source age bands. The smallest age-by-education cell among the four selected education groups has 17 eligible respondents, so we can select ten from every cell.
+
+With seed **10111**, we sample ten real respondents in each of the 4 × 4 cells, without using their BMI values to select them. This produces **160 distinct source rows**, ten per cell. It creates a balanced observational blocked comparison; it does not assign educational treatments.
 
 ```r
-cm <- aov(inf ~ trt, data = crd)
-TukeyHSD(cm)
+lm(BMI ~ age_block + Education, data = rbd)
 ```
 
-The treatment sum of squares is **972.34** with 6 df, so treatment MS = **162.06**. Error sum of squares is **1122.88** with 25 df, so MSE = **44.915**. Their ratio gives **F = 3.608, p = 0.0103**. We reject equality of all seven treatment means at alpha 0.05.
+The model accounts for age-block differences before testing education. Each age block has all four education groups with equal replication. Education has 3 df, age has 3, and residual df is **160 − 1 − 3 − 3 = 153**. The textbook residual formula `(blocks−1)(treatments−1)` applies when there is only one observation per cell; this example has ten, so that formula alone would be wrong here.
 
-The control mean is **22.625% infection**, compared with **5.75% for treatment F12**. A Tukey comparison gives **control − F12 = 16.875 percentage points**, interval about **3.74–30.01**, adjusted p ≈ **0.006**. This supports a difference for that pair; the overall F result does not imply all treatment pairs differ.
+The education result is **F = 3.14, p = 0.027**. This is model-based evidence against equal age-adjusted education means in the selected example, conditional on the assumptions. The line chart plots each education group's mean BMI within the four age blocks. It shows averages, not individual trajectories or treatment response.
 
-The CRD residual Shapiro p is **0.872** and spread-check p **0.116**. We do not detect strong violations with these checks, but nonsignificance in small groups is not proof of perfect assumptions.
+Residual MSE is **45.23** with age blocks versus **45.64** without them: a modest reduction of about **0.9%**, not the earlier agricultural example's 44.8%. The selected RBD residuals are non-normal (Shapiro p about 3.26×10⁻⁹), so this ordinary ANOVA p-value is exploratory and should be interpreted cautiously. We do not claim the simple blocking model solves the measurement or error-distribution limitations.
 
-### D. RBD: account for one nuisance factor
+### D. Latin Square structure: age rows, income columns
 
-A **randomized block design** groups experimental units by a nuisance factor and randomizes treatments within blocks. A nuisance factor affects the response but is not the main treatment question. **Teaching example:** field sections with different fertility could be blocks, so each treatment is tested within every section rather than being confounded with its location.
+A Latin Square has the same number of comparison categories, rows and columns, with every category appearing once in every row and column. We create a **4×4 matched layout** using the same four education categories, the four age rows above, and these four income columns:
 
-Our published **Gomez rice experiment** has **six seeding rates** (25, 50, 75, 100, 125 and 150 kg/ha), **four blocks**, and **24 plots**. Every block contains all six rates once. This is a complete-block design. The [source](https://kwstat.github.io/agridat/reference/gomez.seedrate.html) supplies yield in kg/ha; we do not invent a specific physical cause for the recorded block differences.
+`<20k`, `20–35k`, `35–75k`, `75k+`
 
-The additive model is:
+These combine existing household-income category bands; they do not estimate exact continuous incomes. The cyclic arrangement is:
 
-`yield = overall mean + block effect + rate effect + error`
+| Age / income | <20k | 20–35k | 35–75k | 75k+ |
+|---|---|---|---|---|
+| 18–39 | A | B | C | D |
+| 40–54 | B | C | D | A |
+| 55–69 | C | D | A | B |
+| 70+ | D | A | B | C |
+
+We first verify that the sample contains an eligible respondent for every required age × income × education combination. Then seed **10112** selects one real respondent for each cell. All **16 source rows are distinct**. BMI is not used to choose the layout or respondent. Every BMI and education label is observed; no outcome is simulated or relabelled to make the grid work.
+
+The code checks that each education group appears once per age row and income column, and that each age/income cell contains exactly one selected record. The letter is a short label for the selected person's actual education category.
 
 ```r
-model <- aov(yield ~ rep + rate, data = d)
-no_block <- aov(yield ~ rate, data = d)
+lm(BMI ~ age_block + income_block + Education, data = latin)
 ```
 
-`rep` is the block factor. We represent `rate` as six categories for the course ANOVA, not a fitted polynomial curve. A curved interpolation in a plotted line does not mean the statistical model estimated a continuous optimum.
+The model separates age-row, income-column and education-group variation. Total df is 16 − 1 = 15. Age, income and education each use 3 df, leaving **6 residual df**. This agrees with the 4×4 Latin residual formula `(4−1)(4−2) = 6`.
 
-| Source | df | MS | F | p |
-|---|---:|---:|---:|---:|
-| Blocks | 3 | 648,120.28 | 5.86 | 0.007 |
-| Seeding rates | 5 | 239,666.17 | 2.17 | 0.113 |
-| Residual/error | 15 | 110,558.41 | — | — |
+The education test is **F = 3.28, p = 0.100**. At alpha 0.05, we fail to reject equal adjusted education means in this small matched example. This does not prove equality. The selected group means are A 26.25, B 34.00, C 28.75 and D 25.00, but uncertainty and only six residual df prevent a firm difference claim.
 
-Blocks differ detectably; rate differences are not statistically established at alpha 0.05 after accounting for blocks. This does not prove all rates are equal or that seeding rate never matters. We should not claim an optimum rate from this ANOVA.
+The model is additive and does not independently estimate all row/column/education interactions. Matching makes the layout balanced; it does not eliminate every confounder or justify a national-population or causal conclusion. The residual Shapiro p of 0.613 does not prove normality, especially with this small example.
 
-Error MSE without blocks is **200,152.06**; with blocks it is **110,558.41**. The reduction is:
+### E. Why the three p-values differ
 
-`100 × (200152.06 − 110558.41) / 200152.06 = 44.76%`
+The one-way comparison uses all 3,000 respondents and six education categories. The blocked example uses a balanced 160-row subset with four categories. The Latin example uses only 16 matched records and adjusts for both row and column groups. These are different samples and different models. Do not compare their p-values as if only the number of blocking factors changed on an identical dataset.
 
-Blocking removes some nuisance variation from error and improves precision in this comparison, even though the rate test is not significant. Compare **MSE**, not just residual sum of squares, because the blocked and unblocked models use different df.
+The Latin test has little residual information. A nonsignificant finding there can coexist with a small full-sample p-value. The layouts are teaching examples from the chosen dataset, not optimized models selected to produce significance.
 
-For b = 4 blocks and t = 6 treatments: block df = b − 1 = 3; treatment df = t − 1 = 5; error df = (b − 1)(t − 1) = 15. Total df = 23.
+### F. Scope of Welch and Holm follow-ups
 
-The graph has seeding rate on x and yield on y; each line represents one block. Different vertical patterns help visualize block variation. The additive model assumes no treatment-by-block interaction. With one observation per block/rate cell, interaction cannot be independently separated from pure error in this simple analysis.
+The Welch and Holm results on the slide refer to the **full-sample education comparison**. They are not automatically heteroscedasticity corrections for the blocked or Latin models. State the relevant sample and method before quoting a result.
 
-### E. Latin Square: account for two nuisance factors
+### Implementation and exact records
 
-A **Latin Square design** arranges t treatments in a t×t grid so each treatment appears exactly once in each row and each column. It controls two nuisance directions rather than one. The letters identify treatments, not row or column names.
+- [Project-only full-sample ANOVA and checks](../Lab11_ANOVA_CRD/11b_project_anova.R).
+- [Balanced survey-layout implementation](../Lab11_ANOVA_CRD/11c_survey_design_layouts.R).
+- [Three displayed ANOVA results](../Lab11_ANOVA_CRD/output/survey_design_tests.csv).
+- [RBD source-row ledger](../Lab11_ANOVA_CRD/output/survey_rbd_records.csv), [cell means](../Lab11_ANOVA_CRD/output/survey_rbd_means.csv), [ANOVA table](../Lab11_ANOVA_CRD/output/survey_rbd_anova.csv).
+- [Latin source-row ledger and layout](../Lab11_ANOVA_CRD/output/survey_latin_records.csv), [ANOVA table](../Lab11_ANOVA_CRD/output/survey_latin_anova.csv).
+- [Layout diagnostics](../Lab11_ANOVA_CRD/output/survey_layout_metrics.csv).
+- [Welch and Holm checks](../Lab11_ANOVA_CRD/output/project_anova_checks.csv).
 
-Our published **Goulden wheat fungicide example** has **five treatments, five rows, five columns and 25 plots**. The [source documentation](https://kwstat.github.io/agridat/reference/goulden.latin.html) defines treatments A–E. Yield is retained on the source's scale because the documentation does not specify a unit.
+**Say it simply:** “We use our health records for all three examples. First we compare education groups with one-way ANOVA. Next we make a balanced age-block comparison. Finally, we match real respondents into a Latin Square with age rows and income columns. These demonstrate the layouts, while education remains an observed characteristic rather than a randomized treatment.”
 
-| Treatment | Source meaning | Observed mean yield |
-|---|---|---:|
-| A | Dusted before rains | 6.84 |
-| B | Dusted after rains | 6.46 |
-| C | Dusted once each week | 13.12 |
-| D | Drifting once each week | 7.96 |
-| E | Not dusted | 4.92 |
+**Faculty may ask:** “Did you randomize education?” Answer: “No. We randomly selected existing respondents within eligible categories. That gives a reproducible observational illustration, not randomized exposure assignment.”
 
-The grid in the presentation matches the source layout, displayed with row 5 at the top:
-
-| Source row | Column 1 | Column 2 | Column 3 | Column 4 | Column 5 |
-|---|---|---|---|---|---|
-| 5 | B | D | E | A | C |
-| 4 | C | A | B | E | D |
-| 3 | D | C | A | B | E |
-| 2 | E | B | C | D | A |
-| 1 | A | E | D | C | B |
-
-Check any row or column: it contains A, B, C, D and E once each. The code verifies these counts, not merely that the diagram looks balanced.
-
-The model is `yield = overall mean + row effect + column effect + treatment effect + error`:
-
-```r
-model <- aov(yield ~ row + col + trt, data = d)
-TukeyHSD(model)
-```
-
-Row p is **0.0133**, column p **0.2634**, and treatment **F = 21.03, p < 0.001** after accounting for row and column variation. Treatment MS = **49.152** and error MSE = **2.337**, whose ratio produces the F statistic.
-
-Total df = 25 − 1 = 24. Rows, columns and treatments each use 4 df, leaving **12 error df**. The general Latin Square error formula is `(t − 1)(t − 2)`.
-
-Treatment C has the highest observed mean, **13.12**, and its Tukey comparisons with each other treatment are significant at 0.05. For example C − A = **6.28 source-scale units**, with adjusted p ≈ **0.000234**. We can identify C as best among these treatments for the yield outcome in this experiment; we cannot generalize it to every crop or claim units the source does not state.
-
-A nonsignificant column test does not require removing the column factor: it is part of the planned design. The additive model assumes interactions between treatment and blocking factors are negligible; the simple layout does not provide separate replication to estimate all such interactions.
-
-### Comparing the designs in one place
-
-| Method/design | Response | Factors included | Purpose |
-|---|---|---|---|
-| Health contingency chi-square | Category counts | Two categorical variables | Check association |
-| Observational education ANOVA | BMI | Education | Compare existing groups without claiming randomization |
-| CRD | Potato infection percentage | Sulfur treatment | Compare randomized treatment groups without blocks |
-| RBD | Rice yield, kg/ha | Block + seeding-rate category | Control one nuisance factor |
-| Latin Square | Wheat yield, source scale | Row + column + treatment | Control two nuisance factors |
-
-**Evidence:** [ANOVA/CRD script](../Lab11_ANOVA_CRD/11_anova_crd.R), [ANOVA assumptions and results](../Lab11_ANOVA_CRD/output/metrics.csv), [CRD follow-ups](../Lab11_ANOVA_CRD/output/crd_tukey.csv), [RBD script](../Lab12_ANOVA_RBD/12_anova_rbd.R), [RBD ANOVA](../Lab12_ANOVA_RBD/output/rbd_anova.csv), [Latin script](../Lab13_Latin_Square/13_latin_square.R), [Latin ANOVA](../Lab13_Latin_Square/output/latin_anova.csv), [Latin pair comparisons](../Lab13_Latin_Square/output/tukey.csv).
-
-**Say it simply:** “Chi-square checks category patterns, while ANOVA compares numerical means. The separate experiments show how CRD, blocks and a Latin Square organize fair treatment comparisons and control unwanted variation.”
-
-**Faculty may ask:** “Why include agricultural data in a health project?” Answer: “The survey cannot demonstrate genuine randomized designs. We use clearly labelled published supplements to cover the required methods without inventing randomization.”
+**Faculty may ask:** “Does the Latin example prove no education difference?” Answer: “No. Its p = 0.100 is insufficient evidence at 0.05 in only 16 matched respondents; it does not establish equality.”
 
 ## Slide 12: findings and conclusion
 
@@ -1177,7 +1138,7 @@ There are **11 syllabus experiments and 17 executed scripts**. Some experiments 
 | 8 | 7: one sample; 8: two samples | `Lab07_OneSample_Tests/07_onesample_tests.R`; `Lab08_TwoSample_Tests/08_twosample_tests.R` |
 | 9 | 9: independent/dependent t-tests | `Lab09_Paired_TTest/09_independent_ttest.R`; `Lab09_Paired_TTest/09b_paired_ttest.R` |
 | 10 | 10: chi-square | `Lab10_ChiSquare_Tests/10_chisquare_tests.R` |
-| 11 | 11: CRD/RBD/Latin | `Lab11_ANOVA_CRD/11_anova_crd.R`; `Lab12_ANOVA_RBD/12_anova_rbd.R`; `Lab13_Latin_Square/13_latin_square.R` |
+| 11 | 11: project-data CRD-form/RBD/Latin illustrations | `Lab11_ANOVA_CRD/11b_project_anova.R`; `Lab11_ANOVA_CRD/11c_survey_design_layouts.R` |
 | 12 and supporting outputs | Consolidation | `Lab14_Consolidation/14_consolidation.R` |
 
 ### The 21 original predictors
@@ -1315,11 +1276,11 @@ Try answering aloud before reading the answer. The purpose is to practise reason
 38. **Why does ANOVA analyze variances to test means?** It compares variation between group means with within-group noise through their mean-square ratio.
 39. **Does significant ANOVA identify every differing pair?** No. Post-hoc comparisons are needed, with suitable multiplicity adjustment.
 40. **Why is education ANOVA not a CRD?** Education was observed, not randomly allocated as a treatment.
-41. **How do CRD, RBD and Latin Square differ?** No explicit blocks; one blocking factor; two blocking factors with balanced rows/columns.
-42. **Why is blocking useful when rate p = 0.113?** It reduces residual MSE by 44.8% here, improving the error comparison without forcing treatment significance.
-43. **How many Latin Square residual df?** 12: total 24 minus 4 each for rows, columns and treatments.
-44. **What does Latin treatment C mean?** Weekly dusting, with highest observed mean yield 13.12 and significant Tukey differences from each other treatment in this experiment.
-45. **Why not state wheat yield in kg/ha?** The wheat source does not specify that unit; kg/ha is documented for the rice example only.
+41. **How do CRD, RBD and Latin Square differ?** No explicit blocks; one blocking factor; two blocking factors with balanced rows/columns. Our slide illustrates their analysis structures using observed health categories, without claiming randomized treatments.
+42. **What did age blocking achieve in the health example?** Residual MSE falls from 45.64 to 45.23, about 0.9%. The education test gives p = 0.027 in 160 selected respondents, with non-normal residuals requiring caution.
+43. **How many residual df in our 4×4 Latin layout?** Six: total 15 minus 3 each for age rows, income columns and education groups.
+44. **What do the Latin letters mean now?** A = Some high school, B = High school, C = Some college, D = College graduate. Each labels an actual selected respondent's education.
+45. **Is the Latin result significant, and were the records invented?** No: p = 0.100 fails to reject equal adjusted means at 0.05. All 16 BMI values and categories come from the primary BRFSS sample; source rows are recorded.
 46. **Did we validate prediction on new data?** No. R² and diagnostics describe the fitted sample; held-out prediction evaluation is future work.
 47. **Can a nonsignificant result prove no effect?** No. The data may be too imprecise, the test assumptions may be limited, or the specific null may simply not be rejected.
 48. **What is the main project conclusion?** We demonstrate the full course correctly, find sample group patterns with weak regression explanation, and openly explain misfit and limitations.

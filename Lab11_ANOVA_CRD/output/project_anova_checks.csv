@@ -1,0 +1,5 @@
+"test","estimate","p"
+"Welch one-way ANOVA",11.8117824800757,0.000351255455304911
+"Fligner equal-spread test",25.1489197322206,0.000130404531469308
+"Graduate minus high school (Holm)",-2.30967682702901,9.06261828671782e-14
+"Graduate minus some college (Holm)",-1.49032202809181,1.48637064332403e-06

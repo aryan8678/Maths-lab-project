@@ -1,0 +1,17 @@
+                                          model tested_factor    n education_df
+1                            One-way: Education     Education 3000            5
+2                 Age-adjusted: Age + Education     Education 3000            5
+3 Age/income-adjusted: Age + Income + Education     Education 3000            5
+  residual_df         F            p  r_squared
+1        2994 14.406446 5.724096e-14 0.02349363
+2        2982 17.612181 3.111761e-17 0.05259702
+3        2975  8.735225 3.093773e-08 0.06389399
+                                test  estimate            p
+1                Welch one-way ANOVA 11.811782 3.512555e-04
+2          Fligner equal-spread test 25.148920 1.304045e-04
+3  Graduate minus high school (Holm) -2.309677 9.062618e-14
+4 Graduate minus some college (Holm) -1.490322 1.486371e-06
+The tested factor is Education in every model. Additional factors adjust for recorded age/income groups.
+OLS partial F comparisons assume a suitable independent-error model. Survey weights/design are unavailable.
+Unequal spreads motivate the separate Welch and Holm checks. Welch here checks the unadjusted comparison only.
+No randomized CRD, complete RBD or Latin Square design is claimed for the health survey.

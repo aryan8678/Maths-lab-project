@@ -165,24 +165,24 @@ for(let i=0;i<D.slides.length;i++){
    txt(s,'Association size: V = 0.275',42,611,573,29,21,true);
    txt(s,'Association size: V = 0.045',668,611,572,29,21,true);
   }else if(d.kind==='anova'){
-   table(s,d.anova,42,165,1196,120,23,[830,183,183]);
-   txt(s,'Education: existing survey groups.\nCRD: 32 randomized plots, 7 sulfur treatments.',42,299,593,60,21);
-   txt(s,'Both tests detect a difference between means.\nF does not identify every differing pair.',668,299,569,60,21);
-   rule(s,42,365);
-   txt(s,'RBD: one blocking factor (rice)',42,383,570,32,24,true,BLUE);
-   txt(s,'Latin Square: rows and columns',668,383,570,32,24,true,BLUE);
-   chart(s,'line',d.rbd,27,436,354,184,{xAxis:{textStyle:{typeface:FONT,fontSize:15}},
-    legend:{position:'right',textStyle:{typeface:FONT,fontSize:15}},
-    yAxis:{min:4000,max:6000,majorUnit:1000,textStyle:{typeface:FONT,fontSize:15},majorGridlines:{fill:'#DFE7EB',width:1}}});
-   table(s,d.rbd_table,402,438,213,110,19,[71,61,81]);
-   txt(s,'6 rates in each block.\n44.8% lower error.',402,574,213,55,19,true);
-   txt(s,'X: seeding rate (kg/ha). Y: yield (kg/ha). Rate p = 0.113.',42,615,573,22,16,false,MUTED);
-   const grid=table(s,d.latin,669,436,272,178,21,undefined,false);
-   const fills={A:'#E4F0F5',B:'#D0E4ED',C:'#176D8C',D:'#B9D6E2',E:'#EFF5F8'};
-   for(let r=0;r<5;r++)for(let c=0;c<5;c++){const cell=grid.getCell(r,c);cell.fill=fills[d.latin[r][c]];cell.text.style={typeface:FONT,fontSize:21,bold:true,color:d.latin[r][c]==='C'?WHITE:INK,alignment:'center'};}
-   txt(s,'Wheat: 5 treatments in a 5 × 5 grid. Each letter occurs once per row and column.',968,436,271,95,21);
-   txt(s,'F = 21.03, p < 0.001',968,536,271,31,22,true,BLUE);
-   txt(s,'C: highest mean, 13.12.\nWeekly dusting.',968,578,271,58,21,true);
+   table(s,d.anova,42,166,1196,147,22,[691,151,186,168]);
+   txt(s,'Full-sample checks: Welch p < 0.001. Holm: graduates differ from high school and some college (p < 0.001).',42,331,1196,32,20);
+   rule(s,42,369);
+   txt(s,'RBD layout: four age blocks',42,385,575,34,24,true,BLUE);
+   txt(s,'Latin Square: age and income blocks',668,385,572,34,24,true,BLUE);
+   chart(s,'line',d.rbd,27,433,585,167,{
+    legend:{position:'bottom',textStyle:{typeface:FONT,fontSize:15}},
+    xAxis:{textStyle:{typeface:FONT,fontSize:16}},
+    yAxis:{min:25,max:35,majorUnit:5,title:{text:'Mean BMI',textStyle:{typeface:FONT,fontSize:17}},textStyle:{typeface:FONT,fontSize:16},majorGridlines:{fill:'#DFE7EB',width:1}}});
+   txt(s,'10 respondents in every age × education cell.',42,615,575,27,20);
+   txt(s,'Age',668,429,120,25,18,true);
+   const income=['<20k','20–35k','35–75k','75k+'];
+   income.forEach((v,k)=>txt(s,v,800+k*100,429,100,25,17,true));
+   ['18–39','40–54','55–69','70+'].forEach((v,k)=>txt(s,v,668,469+k*38,127,26,20));
+   const grid=table(s,d.latin,800,465,400,152,22,undefined,false);
+   const fills={A:'#176D8C',B:'#D0E4ED',C:'#B9D6E2',D:'#EAF2F5'};
+   for(let r=0;r<4;r++)for(let c=0;c<4;c++){const cell=grid.getCell(r,c);cell.fill=fills[d.latin[r][c]];cell.text.style={typeface:FONT,fontSize:22,bold:true,color:d.latin[r][c]==='A'?WHITE:INK,alignment:'center'};}
+   txt(s,'A Some HS, B High school, C Some college, D Graduate.',668,622,572,22,16);
   }
   box(s,42,646,1196,2,BLUE);txt(s,d.takeaway,42,658,1150,46,22,true,BLUE);
   txt(s,`${i} / ${D.requestedContentSlides}`,1192,691,69,22,14,false,MUTED);

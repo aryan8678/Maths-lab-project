@@ -1,0 +1,4 @@
+"model","tested_factor","n","education_df","residual_df","F","p","r_squared"
+"One-way: Education","Education",3000,5,2994,14.4064462915677,5.72409567748266e-14,0.0234936315146263
+"Age-adjusted: Age + Education","Education",3000,5,2982,17.6121807173779,3.11176088508723e-17,0.0525970192946786
+"Age/income-adjusted: Age + Income + Education","Education",3000,5,2975,8.73522469113522,3.09377280227246e-08,0.0638939877198446

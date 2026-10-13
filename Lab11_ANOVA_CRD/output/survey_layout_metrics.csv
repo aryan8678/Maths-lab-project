@@ -1,0 +1,9 @@
+"metric","value"
+"rbd_n",160
+"rbd_seed",10111
+"latin_n",16
+"latin_seed",10112
+"rbd_mse",45.2320669934641
+"rbd_unblocked_mse",45.6405448717949
+"rbd_residual_shapiro_p",3.25852272945588e-09
+"latin_residual_shapiro_p",0.613353648932436

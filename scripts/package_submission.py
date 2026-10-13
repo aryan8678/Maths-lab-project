@@ -23,7 +23,9 @@ with zipfile.ZipFile(ppt) as z:
         if i==10:assert 'LAB 9' in visible and 'LAB 7' not in visible and 'LAB 8' not in visible
         if i<11:assert not any(term in visible for term in ['Chi-square','ANOVA','CRD','RBD','Latin Square'])
         elif i==11:assert all(term in visible for term in ['LAB 10','Chi-square']) and 'ANOVA' not in visible
-        elif i==12:assert all(term in visible for term in ['LAB 11','ANOVA','CRD','RBD','Latin Square'])
+        elif i==12:
+            assert all(term in visible for term in ['LAB 11','ANOVA','CRD','RBD','Latin Square','BMI','Education','Welch'])
+            assert not any(term in visible.lower() for term in ['potato','rice','wheat','sulfur','dusting','yield'])
         else:assert all(term in visible for term in ['Conclusion','Limits','Next steps'])
 assert len(PdfReader(OUT/'Diabetes_Statistics_Report.pdf').pages)==18
 assert len(PdfReader(OUT/'Diabetes_Statistics_Slides.pdf').pages)==13
@@ -48,6 +50,8 @@ evidence={'slides':13,'intro_slides':1,'content_slides':12,
           'experiments_7_8_9':'Labs 7–8 on content slide 8; Lab 9 on content slide 9',
           'experiments_10_11':'separate content slides 10 and 11; conclusion on final content slide 12',
           'lab_labels':'Every slide identifies its syllabus exercise at the top',
+          'lab_11_scope':'BRFSS-only CRD-form ANOVA (n3000), balanced age-block layout (n160), matched 4x4 Latin layout (n16); observational, not randomized treatments',
+          'additional_lab11_scripts':['Lab11_ANOVA_CRD/11b_project_anova.R','Lab11_ANOVA_CRD/11c_survey_design_layouts.R'],
           'report_pages':18,'drawings':29,'completed_scripts':17,
           'source_commit':'2bfebaedd34c387206d70c8a362234e1cd425c2d',
           'analysis_validation':'PASS: tests/validate_project.R',

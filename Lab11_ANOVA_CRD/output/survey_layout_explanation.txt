@@ -1,0 +1,37 @@
+                                  model    n education_df residual_df         F
+1 CRD-form: all survey education groups 3000            5        2994 14.406446
+2                RBD layout: age blocks  160            3         153  3.137662
+3   Latin layout: age and income blocks   16            3           6  3.284483
+             p  r_squared
+1 5.724096e-14 0.02349363
+2 2.718304e-02 0.08285355
+3 1.002268e-01 0.74107143
+       
+        Some high school High school Some college College graduate
+  18-39               10          10           10               10
+  40-54               10          10           10               10
+  55-69               10          10           10               10
+  70+                 10          10           10               10
+     age_block income_block        Education letter BMI source_row
+664      18-39         <20k Some high school      A  25     236541
+2547     18-39       20-35k      High school      B  36      18641
+245      18-39       35-75k     Some college      C  30      51273
+57       18-39         75k+ College graduate      D  26     205779
+326      40-54         <20k      High school      B  32      42099
+811      40-54       20-35k     Some college      C  19     203232
+2471     40-54       35-75k College graduate      D  22     245450
+2962     40-54         75k+ Some high school      A  30     201340
+155      55-69         <20k     Some college      C  37     251454
+815      55-69       20-35k College graduate      D  27     112826
+1414     55-69       35-75k Some high school      A  24     177388
+2680     55-69         75k+      High school      B  39     116832
+277        70+         <20k College graduate      D  25     155724
+201        70+       20-35k Some high school      A  26      30101
+627        70+       35-75k      High school      B  29     231610
+2014       70+         75k+     Some college      C  29     114405
+All BMI values and categories are observed BRFSS data. No synthetic outcomes or treatment assignments.
+Age strata:18-39,40-54,55-69,70+. Income:<20k,20-35k,35-75k,75k+.
+Education letters:A Some high school,B High school,C Some college,D College graduate.
+Seeds10111/10112 choose respondents within eligible cells. BMI is not used for selection.
+Balanced blocked and Latin layouts demonstrate additive ANOVA structure only. Education was not randomized.
+Small matched Latin subset n16 is exploratory; model assumptions and matching limit inference.
